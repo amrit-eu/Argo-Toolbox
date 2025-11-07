@@ -8,25 +8,32 @@ assignees: ''
 ---
 
 # Preamble
-\<Basic context and background\>
+(Basic context and background)
 
 # Requirements
-\<What needs to happen?\>
+(What needs to happen?)
 
 # Impact
-\<Why is this important?\>
+(Why is this important?)
 
 # Suggestions
-\<Is there extra input you want to give the developer?\>
+(Is there any extra input you want to give the developer?)
 
 # Scope
-AC: <When will this ticket be considered complete?>
+## Acceptance Criteria
+(When will the ticket be considered complete?)
 
-GIVEN: <A requirement that is already satisfied>
-WHEN: <Something happens>
-THEN: <The desired result>
+### GIVEN
+(A requirement that is already satisfied)
 
-For this ticket, It is not in scope to <do something that isn't required>
+### WHEN
+(Something happens)
+
+### THEN
+(The desired result)
+
+## Out of scope
+For this ticket, It is not in scope to (do something that isn't required)
 
 # Links and References
 - Something
