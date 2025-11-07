@@ -8,16 +8,16 @@ assignees: ''
 ---
 
 # Preamble
-<Basic context and background>
+\<Basic context and background\>
 
 # Requirements
-<What needs to happen?>
+\<What needs to happen?\>
 
 # Impact
-<Why is this important?>
+\<Why is this important?\>
 
 # Suggestions
-<Is there extra input you want to give the developer?>
+\<Is there extra input you want to give the developer?\>
 
 # Scope
 AC: <When will this ticket be considered complete?>
