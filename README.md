@@ -27,6 +27,7 @@ By default :
 - **File Checker API**: http://localhost:8000/
 
 ### Configuration 
+The `argo_nginx.conf` is needed but should not be changed.
 All configuration is done via an `.env` file:
 
 ```env
