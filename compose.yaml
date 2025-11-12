@@ -1,0 +1,69 @@
+services:
+  file_checker_api:
+    container_name: argo-file-checker-api
+    image: ${FILECHECKERAPI_IMAGE}:${FILECHECKERAPI_IMAGE_TAG}
+    profiles:
+      - ${FILECHECKER_ENABLED:-enabled}
+    ports:
+      - 8000:8000
+    cap_drop:
+      - ALL
+    networks:
+      - argo-toolbox
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+  decoder_api:
+    container_name: argo-decoder-api
+    image: ${ARGODECODERAPI_IMAGE}:${ARGODECODERAPI_IMAGE_TAG}
+    profiles:
+      - ${DECODER_ENABLED:-enabled}
+    ports:
+      - 8001:8000
+    cap_drop:
+      - ALL
+    networks:
+      - argo-toolbox
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+  webserver :
+    container_name: argo-toolbox-webserver
+    image: nginxinc/nginx-unprivileged
+    profiles:
+      - ${WEBSERVER_ENABLED:-enabled}
+    ports:
+      - "${WEBSERVER_PORT:-8080}:8080"
+    volumes:
+      - ./argo_nginx.conf:/etc/nginx/conf.d/argo_nginx.conf:ro    
+    cap_drop:
+      - ALL
+    networks:
+      - argo-toolbox
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/nginx-health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    depends_on:
+      decoder_api:
+        condition: service_healthy
+        required: false
+      file_checker_api:
+        condition: service_healthy
+        required: false
+networks:
+  argo-toolbox: {}
+      
