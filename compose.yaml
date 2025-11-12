@@ -5,7 +5,8 @@ services:
     profiles:
       - ${FILECHECKER_ENABLED:-enabled}
     ports:
-      - 8000:8000
+      - ${FILECHECKER_PORT:-8000}:8000
+    user : "fileCheckerRunner"
     cap_drop:
       - ALL
     networks:
@@ -24,7 +25,7 @@ services:
     profiles:
       - ${DECODER_ENABLED:-enabled}
     ports:
-      - 8001:8000
+      - ${DECODER_PORT:-8001}:8000
     cap_drop:
       - ALL
     networks:
