@@ -1,0 +1,9 @@
+[tool.ruff]
+# Only lint notebooks (and optionally your Python code)
+include = ["notebooks/**/*.ipynb"]
+line-length = 100
+fix = true
+
+[tool.ruff.lint]
+extend-select = ["I", "F" ,"E"] # Sort imports (like isort) and remove unused ones
+ignore = ["E501"] # Ignore long-line warnings
