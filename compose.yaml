@@ -26,6 +26,9 @@ services:
       - ${DECODER_ENABLED:-enabled}
     ports:
       - ${DECODER_PORT:-8001}:8000
+    user: $DECODER_USER_UID:$DECODER_USER_GID
+    group_add:
+      - gbatch
     cap_drop:
       - ALL
     networks:
