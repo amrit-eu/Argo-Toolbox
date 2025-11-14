@@ -23,9 +23,9 @@ services:
     container_name: argo-decoder-api
     image: ${ARGODECODERAPI_IMAGE}:${ARGODECODERAPI_IMAGE_TAG}
     profiles:
-      - ${DECODER_ENABLED:-enabled}
+      - ${ARGODECODERAPI_ENABLED:-enabled}
     ports:
-      - ${DECODER_PORT:-8001}:8000
+      - ${ARGODECODERAPI_PORT:-8001}:8000
     user: $DECODER_USER_UID:$DECODER_USER_GID
     group_add:
       - gbatch
