@@ -20,7 +20,7 @@ Docker Desktop allows you to run container-based applications.
 
 ---
 
-### 🔧 Install Git
+#### 🔧 Install Git
 
 Git is used to download ("clone") the Toolbox repository.
 
@@ -35,15 +35,15 @@ Git is used to download ("clone") the Toolbox repository.
 Open **Git Bash** or **PowerShell**, then run:
 
 ```bash
-git clone https://github.com/<org>/<repo>.git
-cd <repo>
+git https://github.com/amrit-eu/Argo-Toolbox.git
+cd Argo-Toolbox
 ```
 
 This downloads the Toolbox code onto your computer.
 
 ---
 
-### Configure the Environment
+### ⚙️ Configure the Environment
 
 The Toolbox API uses an environment file to configure the services.
 
@@ -64,163 +64,76 @@ The Toolbox API uses an environment file to configure the services.
 
 ---
 
-### 🚀 Launch Services
+### ▶ Launch Services (via Docker Desktop – No Terminal Needed)
 
-Everything is managed through **Docker Compose**.
+All services can be launched directly from **Docker Desktop**, without using the command line.
 
-Start all services:
+---
+
+1. Open Docker Desktop
+
+    Launch Docker Desktop and wait until it shows:
+
+    ```text
+    Docker Desktop — Running
+    ```
+
+2. Open the *Containers* view
+
+    In the left sidebar, click:
+
+    **Containers → [your-repo-name]**
+
+    You should see a list of services defined in `compose.yaml`.
+
+3. Start all services
+
+    Next to the project name, click:
+
+    👉 **▶ Start**
+
+    Docker Desktop will:
+
+    - pull the container images (first time only)
+    - start all services listed in `compose.yaml`
+    - show green “Running” indicators
+
+4. Check that everything is running
+
+    Each service should display:
+
+    - a **green dot**
+    - a **Running** status
+
+    You can click any container to view logs, ports, and details.
+
+5. Stop all services
+
+    To stop everything safely, click:
+
+    👉 **⏹ Stop**
+
+6. Restart if needed
+
+    You can restart the entire stack by clicking:
+
+    👉 **⟳ Restart**
+
+#### 💡 Optional: Command Line (for advanced users)
+
+If you prefer using a terminal:
 
 ```bash
 docker compose up -d
-```
-
-Check that they’re running:
-
-```bash
 docker compose ps
-```
-
-Stop everything:
-
-```bash
 docker compose down
 ```
 
 ---
 
-### 🧪 Using JupyterLab
+## 🚀 Local Deployment Guide (Mac)
 
-JupyterLab gives you an interactive Python workspace.
-
-#### Open JupyterLab
-
-Navigate to: <http://localhost:8888>
-
-It should open automatically in your browser.
-
----
-
-#### 📂 Example Notebooks
-
-The project includes notebooks demonstrating:
-
-- Working with Git LFS data
-- Decoding source files
-- Validating Argo NetCDF files
-
-##### 🔄 Pull large Git LFS data
-
-```bash
-git lfs install
-git lfs pull
-```
-
----
-
-#### 📦 Installing extra Python packages
-
-Inside JupyterLab:
-
-1. Open a **Terminal**
-2. Run:
-
-```bash
-pip install <package-name>
-```
-
-Packages are installed **inside the container**, not on your Windows system.
-
----
-
-### 🌐 Accessing the API
-
-#### 📄 Swagger UI (interactive)
-
-Open: <http://localhost:8080/docs>
-
-You can test endpoints directly in the browser.
-
----
-
-#### 💻 API Usage Examples
-
-##### 🐍 Python
-
-```python
-import requests
-print(requests.get("http://localhost:8080/<endpoint>").json())
-```
-
-##### 📘 R
-
-```r
-library(httr)
-content(GET("http://localhost:8080/<endpoint>"))
-```
-
-##### 🟡 MATLAB
-
-```matlab
-response = webread("http://localhost:8080/<endpoint>")
-```
-
-##### 🔵 Julia
-
-```julia
-using HTTP, JSON
-JSON.parse(String(HTTP.get("http://localhost:8080/<endpoint>").body))
-```
-
-##### 🐚 curl (Bash / Zsh)
-
-```bash
-curl http://localhost:8080/<endpoint>
-```
-
-##### PowerShell
-
-```powershell
-Invoke-WebRequest -Uri "http://localhost:8080/<endpoint>" |
-    Select-Object -ExpandProperty Content
-```
-
----
-
-### 🛑 Troubleshooting
-
-### View logs
-
-```bash
-docker compose logs -f
-```
-
-### Restart everything
-
-```bash
-docker compose down
-docker compose up -d
-```
-
-### Check container status
-
-```bash
-docker compose ps
-```
-
----
-
-### 🐞 Reporting Issues
-
-When reporting an issue, please include:
-
-- Your Windows version
-- Docker Desktop version
-- Steps to reproduce
-- Logs or error messages
-
-Submit issues here:
-
-👉 <https://github.com/amrit-eu/Argo-Toolbox/issues>
+TBD...
 
 ---
 
@@ -281,6 +194,142 @@ COMPOSE_PROFILES=enabled #  DO NOT CHANGE
 ```
 
 If WEBSERVER is disabled, the services (file checker & decoder) will be available directly with the ports defined (localhost:8000 by default for file checker and localhost:8001 for decoder).
+
+---
+
+### 🛑 Troubleshooting
+
+#### View logs
+
+```bash
+docker compose logs -f
+```
+
+#### Restart everything
+
+```bash
+docker compose down
+docker compose up -d
+```
+
+#### Check container status
+
+```bash
+docker compose ps
+```
+
+---
+
+## 🧪 Using JupyterLab
+
+JupyterLab gives you an interactive Python workspace.
+
+### Open JupyterLab
+
+Navigate to: <http://localhost:8888>
+
+It should open automatically in your browser.
+
+---
+
+### 📂 Example Notebooks
+
+The project includes notebooks demonstrating:
+
+- Working with Git LFS data
+- Decoding source files
+- Validating Argo NetCDF files
+
+#### 🔄 Pull large Git LFS data
+
+```bash
+git lfs install
+git lfs pull
+```
+
+---
+
+### 📦 Installing extra Python packages
+
+Inside JupyterLab:
+
+1. Open a **Terminal**
+2. Run:
+
+```bash
+pip install <package-name>
+```
+
+Packages are installed **inside the container**, not on your Windows system.
+
+---
+
+## 🌐 Accessing the API
+
+### 📄 Swagger UI (interactive)
+
+Open: <http://localhost:8080/docs>
+
+You can test endpoints directly in the browser.
+
+---
+
+### 💻 API Usage Examples
+
+#### 🐍 Python
+
+```python
+import requests
+print(requests.get("http://localhost:8080/<endpoint>").json())
+```
+
+#### 📘 R
+
+```r
+library(httr)
+content(GET("http://localhost:8080/<endpoint>"))
+```
+
+#### 🟡 MATLAB
+
+```matlab
+response = webread("http://localhost:8080/<endpoint>")
+```
+
+#### 🔵 Julia
+
+```julia
+using HTTP, JSON
+JSON.parse(String(HTTP.get("http://localhost:8080/<endpoint>").body))
+```
+
+#### 🐚 curl (Bash / Zsh)
+
+```bash
+curl http://localhost:8080/<endpoint>
+```
+
+#### PowerShell
+
+```powershell
+Invoke-WebRequest -Uri "http://localhost:8080/<endpoint>" |
+    Select-Object -ExpandProperty Content
+```
+
+---
+
+### 🐞 Reporting Issues
+
+When reporting an issue, please include:
+
+- Your Windows version
+- Docker Desktop version
+- Steps to reproduce
+- Logs or error messages
+
+Submit issues here:
+
+👉 <https://github.com/amrit-eu/Argo-Toolbox/issues>
 
 ---
 
