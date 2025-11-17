@@ -46,8 +46,10 @@ services:
     image: ${JUPYTERLAB_IMAGE:-quay.io/jupyter/datascience-notebook}:${JUPYTERLAB_IMAGE_TAG:-python-3.13}
     profiles:
       - jupyter
+    environment:
+      - JUPYTER_PORT=${JUPYTER_PORT}
     ports:
-      - ${JUPYTER_PORT}:8888
+      - ${JUPYTER_PORT}:${JUPYTER_PORT}
     volumes:
       - ./jupyter:/home/jovyan
     cap_drop:
@@ -55,14 +57,13 @@ services:
     networks:
       - argo-toolbox
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8888/api"]
+      test: ["CMD", "curl", "-f", "http://localhost:${JUPYTER_PORT}/api"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
     restart: unless-stopped
-    command: start-notebook.py --NotebookApp.token='${JUPYTERLAB_TOKEN}'
-
+    command: start-notebook.py --ServerApp.allow_remote_access=True --ServerApp.token='' --ServerApp.password='' --ServerApp.base_url=/argo-toolbox/jupyterlab/ 
 
   webserver :
     container_name: argo-toolbox-webserver
