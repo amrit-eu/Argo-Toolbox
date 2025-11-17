@@ -9,6 +9,4 @@ COPY environment.yaml /tmp/environment.yaml
 # install dependencies
 RUN mamba env update -n base -f /tmp/environment.yaml
 
-ENV JUPYTER_ENABLE_LAB=yes
-
 USER ${NB_USER}
