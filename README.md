@@ -59,3 +59,5 @@ COMPOSE_PROFILES=enabled #  DO NOT CHANGE
 ```
 
 If WEBSERVER is disabled, the services (file checker & decoder) will be available directly with the ports defined (localhost:8000 by default for file checker and localhost:8001 for decoder).
+
+### Build a custome jupyterlab image

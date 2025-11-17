@@ -3,7 +3,7 @@ services:
     container_name: argo-file-checker-api
     image: ${FILECHECKERAPI_IMAGE}:${FILECHECKERAPI_IMAGE_TAG}
     profiles:
-      - ${FILECHECKER_ENABLED:-enabled}
+      - checker
     ports:
       - ${FILECHECKER_PORT:-8000}:8000
     user : "fileCheckerRunner"
@@ -23,12 +23,12 @@ services:
     container_name: argo-decoder-api
     image: ${ARGODECODERAPI_IMAGE}:${ARGODECODERAPI_IMAGE_TAG}
     profiles:
-      - ${DECODER_ENABLED:-enabled}
+      - decoder
     ports:
       - ${DECODER_PORT:-8001}:8000
-    user: $DECODER_USER_UID:$DECODER_USER_GID
-    group_add:
-      - gbatch
+    # user: ${DECODER_USER_UID}:${DECODER_USER_GID}
+    # group_add:
+    #   - gbatch
     cap_drop:
       - ALL
     networks:
@@ -41,11 +41,34 @@ services:
       start_period: 40s
     restart: unless-stopped
 
+  jupyterlab:
+    container_name: jupyterlab
+    image: ${JUPYTERLAB_IMAGE:-quay.io/jupyter/datascience-notebook}:${JUPYTERLAB_IMAGE_TAG:-python-3.13}
+    profiles:
+      - jupyter
+    ports:
+      - ${JUPYTER_PORT}:8888
+    volumes:
+      - ./jupyter:/home/jovyan
+    cap_drop:
+      - ALL
+    networks:
+      - argo-toolbox
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/api"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    command: start-notebook.py --NotebookApp.token='${JUPYTERLAB_TOKEN}'
+
+
   webserver :
     container_name: argo-toolbox-webserver
     image: nginxinc/nginx-unprivileged
     profiles:
-      - ${WEBSERVER_ENABLED:-enabled}
+      - webserver
     ports:
       - "${WEBSERVER_PORT:-8080}:8080"
     volumes:
