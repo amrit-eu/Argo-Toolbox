@@ -2,6 +2,7 @@ server {
     listen 8080;
     server_name localhost;
 
+
     # for nginx health check
     location  /nginx-health {
         access_log off;
@@ -29,7 +30,7 @@ server {
 
     # for jupyterlab route :
     location /argo-toolbox/jupyterlab/ {
-        proxy_pass http://jupyterlab:8002/argo-toolbox/jupyterlab/;
+        proxy_pass "http://jupyterlab:${WEBSERVER_PORT}/argo-toolbox/jupyterlab/";
 
         # Standard proxy headers
         proxy_set_header Host $host;
