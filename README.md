@@ -1,41 +1,84 @@
 # Argo Toolbox API
 
-A step‑by‑step guide to install, run, and explore the **Toolbox API** locally on a Windows laptop.  
+A step‑by‑step guide to install, run, and explore the **Toolbox API** locally.  
 This documentation is tailored for **non‑technical users**, with simple instructions and no prior Docker experience required.
 
 ---
 
-## 🚀 Local Deployment Guide (Windows)
+## 🚀 Local Deployment Guide
+
+This section provides installation instructions for Windows, Mac, and Linux. Follow the steps relevant to your operating system.
 
 ### 🛠 Prerequisites
 
-#### 🐋 Install Docker Desktop
+Regardless of the operating system, you will need **Docker** and **Git**.
 
-Docker Desktop allows you to run container-based applications.
+#### 1. Install Docker
 
-👉 Download for Windows: <https://www.docker.com/products/docker-desktop/>  
-✔ Install with default settings  
-✔ Restart your computer if prompted  
-✔ Ensure Docker shows **Running**
+- **Windows and Mac:**
+  - Download Docker Desktop: [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+  - Install with default settings and restart if prompted.
+  - Ensure Docker shows **Running**.
+
+- **Linux:**
+  - Update package index:
+  
+    ```bash
+    sudo apt update
+    ```
+
+  - Install Docker:
+  
+    ```bash
+    sudo apt install docker.io
+    ```
+
+  - Enable Docker:
+  
+    ```bash
+    sudo systemctl enable docker
+    sudo systemctl start docker
+    ```
+
+  - Verify installation:
+  
+    ```bash
+    docker --version
+    ```
 
 ---
 
-#### 🔧 Install Git
+#### 2. Install Git
 
-Git is used to download ("clone") the Toolbox repository.
+- **Windows:**
+  - Download Git: [Git for Windows](https://git-scm.com/download/win)
+  - Install using default settings and verify in **Git Bash**.
 
-👉 Download Git: <https://git-scm.com/download/win>  
-✔ Install using default settings  
-✔ Open **Git Bash** to verify the installation
+- **Mac:**
+  - Download Git: [Git for Mac](https://git-scm.com/download/mac)
+  - Install using default settings and verify in **Terminal**.
+
+- **Linux:**
+  - Install Git:
+  
+    ```bash
+    sudo apt install git
+    ```
+
+  - Verify installation:
+  
+    ```bash
+    git --version
+    ```
 
 ---
 
 ### 📥 Clone the Repository
 
-Open **Git Bash** or **PowerShell**, then run:
+Open Terminal (Linux and Mac) or PowerShell (Windows) and run:
 
 ```bash
-git https://github.com/amrit-eu/Argo-Toolbox.git
+git clone https://github.com/amrit-eu/Argo-Toolbox.git
 cd Argo-Toolbox
 ```
 
@@ -44,8 +87,6 @@ This downloads the Toolbox code onto your computer.
 ---
 
 ### ⚙️ Configure the Environment
-
-The Toolbox API uses an environment file to configure the services.
 
 1. In the project folder, locate:
 
@@ -60,6 +101,7 @@ The Toolbox API uses an environment file to configure the services.
    ```
 
 3. If you are comfortable with Docker and wish to customise the configurations, Open `.env` using your favorite text editor.
+
 4. You can adjust values for your needs (look at `.env.docs` file that describe configurations).
 
 ---
@@ -128,74 +170,6 @@ docker compose up -d
 docker compose ps
 docker compose down
 ```
-
----
-
-## 🚀 Local Deployment Guide (Mac)
-
-TBD...
-
----
-
-## 🚀 Local Deployment Guide (Linux)
-
-This Docker Compose configuration allows you to run the Argo Toolbox API locally on your laptop, replacing the Kubernetes deployment for easier local development and testing.
-
-### Prerequisites
-
-- Docker (Docker Desktop for Windows)
-
-### Quick start
-
-Clone this repository, rename the `.env.demo` file in `.env` and do this command :
-
-```bash
-# Start all services
-docker compose up -d
-```
-
-### Accessing Services
-
-Once started, services are accessible at:
-
-- **Decoder API**: <http://localhost:8080/argo-toolbox/api/decoder>
-- **File Checker API**: <http://localhost:8080/argo-toolbox/api/file-checker>
-- **Home page**: <http://localhost:8080/>
-
-### Direct API Access (bypassing webserver)
-
-By default :
-
-- **Decoder API**: <http://localhost:8001/>
-- **File Checker API**: <http://localhost:8000/>
-
-### Configuration
-
-The `argo_nginx.conf` is needed but should not be changed.
-All configuration is done via an `.env` file:
-
-```env
-#file checker API configuration
-FILECHECKERAPI_IMAGE=ghcr.io/oneargo/argoformatchecker/python-api
-FILECHECKERAPI_IMAGE_TAG=latest
-FILECHECKER_ENABLED=enabled #use 'enabled' or 'disabled' to enable/disable the service
-FILECHECKER_PORT=8000
-
-#decoder API configuration
-ARGODECODERAPI_IMAGE=boilerplateapi # to change with decoder image
-ARGODECODERAPI_IMAGE_TAG=latest
-DECODER_ENABLED=enabled #use 'enabled' or 'disabled' to enable/disable the service
-DECODER_PORT=8001
-
-#webserveur NGINX configuration
-WEBSERVER_ENABLED=enabled #use 'enabled' or 'disabled' to enable/disable the service
-WEBSERVER_PORT=8080
-
-#default profile to use with docker compose up.
-COMPOSE_PROFILES=enabled #  DO NOT CHANGE
-```
-
-If WEBSERVER is disabled, the services (file checker & decoder) will be available directly with the ports defined (localhost:8000 by default for file checker and localhost:8001 for decoder).
 
 ---
 
