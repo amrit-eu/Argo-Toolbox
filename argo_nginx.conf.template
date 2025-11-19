@@ -1,7 +1,7 @@
 server {
     listen 8080;
     server_name localhost;
-
+    resolver 127.0.0.11 valid=30s;
 
     # for nginx health check
     location  /nginx-health {
@@ -16,7 +16,9 @@ server {
     }
 
     location /argo-toolbox/api/file-checker/ {
-        proxy_pass http://file_checker_api:8000/;
+        # workaround to let nginx start if upstream host is unavailable or down
+        set $checker "file_checker_api:8000/";
+        proxy_pass http://$checker;
     }
 
     # for decoder route :
@@ -25,12 +27,14 @@ server {
     }
 
     location /argo-toolbox/api/decoder/ {
-        proxy_pass http://decoder_api:8000/;
+        # workaround to let nginx start if upstream host is unavailable or down
+        set $decoder "decoder_api:8000/";
+        proxy_pass http://$decoder;
     }
 
     # for jupyterlab route :
-    location /argo-toolbox/jupyterlab/ {
-        proxy_pass "http://jupyterlab:${WEBSERVER_PORT}/argo-toolbox/jupyterlab/";
+    location /argo-toolbox/jupyterlab/ {   
+        proxy_pass http://jupyterlab:${WEBSERVER_PORT}/argo-toolbox/jupyterlab/;
 
         # Standard proxy headers
         proxy_set_header Host $host;
