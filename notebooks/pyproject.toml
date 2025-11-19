@@ -6,3 +6,6 @@ fix = true
 
 [tool.ruff.lint]
 extend-select = ["I", "F" ,"E"] # Sort imports (like isort) and remove unused ones
+
+[tool.nbqa.files]
+isort = ["notebooks/**/*.ipynb"]
