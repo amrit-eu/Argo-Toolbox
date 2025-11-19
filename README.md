@@ -262,7 +262,8 @@ To be completed....
 The file checker endpoint will then be available on <http://localhost:8080/argo-toolbox/api/file-checker/check-files> (POST method).
 
 The DAC for the files needs to be specified as a parameter. The files to check need to be included in the body of a `multipart/form-data` type request, e.g.:
-For example, post an example file found in the _argofilechecker-python-wrapper/demo_scripts/test_data/2903996_ folder to `http://localhost:8080/argo-toolbox/api/file-checker/check-files?dac=coriolis`
+For example, post a file to `http://localhost:8080/argo-toolbox/api/file-checker/check-files?dac=coriolis` . Example files can be found <https://github.com/OneArgo/ArgoFormatChecker/tree/main/demo/inputs>
+
 
 ```http request
 curl -X 'POST' \
