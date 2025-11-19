@@ -5,9 +5,9 @@ This documentation is tailored for **non‑technical users**, with simple instru
 
 ---
 
-## Quick start
+## 🚀 Quick start
 
-If you have already docker and git configured on your local machine you can just follows theses steps :
+If you already have Docker and Git configured on your local machine, you can just follow these steps:
 - clone this git repository : 
     ```bash
     git clone https://github.com/amrit-eu/Argo-Toolbox.git
@@ -22,7 +22,7 @@ If you have already docker and git configured on your local machine you can just
     ```
 
 
-## 🚀 Detailed local Deployment Guide
+## 🖥️ Detailed local Deployment Guide
 
 This section provides installation instructions for Windows, Mac, and Linux. Follow the steps relevant to your operating system.
 
@@ -121,6 +121,36 @@ This downloads the Toolbox code onto your computer.
 
 4. You can adjust values for your needs (look at `demo.env` file that describe configurations).
 
+```env
+#file checker API configuration
+FILECHECKERAPI_IMAGE=ghcr.io/oneargo/argoformatchecker/python-api
+FILECHECKERAPI_IMAGE_TAG=latest
+
+#decoder API configuration
+ARGODECODERAPI_IMAGE=boilerplateapi # to change with decoder image
+ARGODECODERAPI_IMAGE_TAG=latest
+DECODER_USER_UID=1000
+DECODER_USER_GID=1000
+
+#jupyterlab configuration :
+JUPYTERLAB_IMAGE=quay.io/jupyter/datascience-notebook
+JUPYTERLAB_IMAGE_TAG=python-3.13
+JUPYTER_USER_UID=1000
+
+#webserveur NGINX configuration
+WEBSERVER_HOST="127.0.0.1"
+WEBSERVER_PORT=8080
+
+#Configure which service to enable (decoder,checker,jupyter) separated by a comma. will be run with 'docker compose up'
+COMPOSE_PROFILES=decoder,checker,jupyter
+```
+
+Webserver will always be enabled as it is necessary to access others services. 
+
+Warning : An issue prevents the web server from starting if the Jupyter service is not running. For the moment keep `jupyter` in the list of services in `COMPOSE_PROFILES`.
+
+The `argo_nginx.conf.template` file is needed and **must not** be changed.
+
 ---
 
 ### ▶ Launch Services (via Docker Desktop – No Terminal Needed)
@@ -180,6 +210,7 @@ All services can be launched directly from **Docker Desktop**, without using the
 
 #### 💡 Optional: Command Line (for advanced users)
 
+##### 🚀 Launch services
 If you prefer using a terminal:
 
 ```bash
@@ -190,22 +221,22 @@ docker compose down
 
 ---
 
-### 🛑 Troubleshooting docker
+##### 🛑 Troubleshooting docker
 
-#### View logs
+###### View logs
 
 ```bash
 docker compose logs -f
 ```
 
-#### Restart everything
+###### Restart everything
 
 ```bash
 docker compose down
 docker compose up -d
 ```
 
-#### Check container status
+###### Check container status
 
 ```bash
 docker compose ps
@@ -214,78 +245,48 @@ docker compose ps
 ---
 
 
-## 🚀 Local Deployment Guide (Mac)
-
-TBD...
-
----
-
-## 🚀 Local Deployment Guide (Linux)
-
-This Docker Compose configuration allows you to run the Argo Toolbox API locally on your laptop, replacing the Kubernetes deployment for easier local development and testing.
-
-
-
-## Configuring services
-The `argo_nginx.conf.template` is needed and must not be changed.
-All configuration is done via the `.env` file:
-
-```env
-#file checker API configuration
-FILECHECKERAPI_IMAGE=ghcr.io/oneargo/argoformatchecker/python-api
-FILECHECKERAPI_IMAGE_TAG=latest
-
-#decoder API configuration
-ARGODECODERAPI_IMAGE=boilerplateapi # to change with decoder image
-ARGODECODERAPI_IMAGE_TAG=latest
-DECODER_USER_UID=1000
-DECODER_USER_GID=1000
-
-#jupyterlab configuration :
-JUPYTERLAB_IMAGE=quay.io/jupyter/datascience-notebook
-JUPYTERLAB_IMAGE_TAG=python-3.13
-JUPYTER_USER_UID=1000
-
-#webserveur NGINX configuration
-WEBSERVER_HOST="127.0.0.1"
-WEBSERVER_PORT=8080
-
-#Configure which service to enable (decoder,checker,jupyter) separated by a comma. will be run with 'docker compose up'
-COMPOSE_PROFILES=decoder,checker,jupyter
-```
-
-Webserver will always be enabled as it is necessary to access others services. 
-Warning : an issue
-
 ## Accessing Services
 
-Once started, services are accessible at (considering the port configured in `.env` file):
+Once started, services are accessible at (considering the port configured in `.env` file, 8080 in demo.env provided):
 
 - **Decoder API**: <http://localhost:8080/argo-toolbox/api/decoder>
 - **File Checker API**: <http://localhost:8080/argo-toolbox/api/file-checker>
 - **JupyterLab**: <http://localhost:8080/argo-toolbox/jupyterlab>
 - **Home page**: <http://localhost:8080/>
 
+### Using Decoder
 
+To be completed....
 
-## Using Argo Netcdf File Checker
+### Using Argo Netcdf File Checker
+The file checker endpoint will then be available on <http://localhost:8080/argo-toolbox/api/file-checker/check-files> (POST method).
 
+The DAC for the files needs to be specified as a parameter. The files to check need to be included in the body of a `multipart/form-data` type request, e.g.:
+For example, post an example file found in the _argofilechecker-python-wrapper/demo_scripts/test_data/2903996_ folder to `http://localhost:8080/argo-toolbox/api/file-checker/check-files?dac=coriolis`
 
-## 🧪 Using JupyterLab
+```http request
+curl -X 'POST' \
+  'http://localhost:8080/argo-toolbox/api/file-checker/check-files?dac=coriolis' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'files=@2903996_meta.nc'
+```
+### 🧪 Using JupyterLab
 
 JupyterLab gives you an interactive Python workspace.
 
-### Open JupyterLab
+#### Open JupyterLab
 
-Navigate to: <http://localhost:8888>
+Navigate to: <http://localhost:8080/argo-toolbox/jupyterlab>
 
 It should open automatically in your browser.
 
+![alt text](image.png)
 ---
 
-### 📂 Example Notebooks
+#### 📂 Example Notebooks
 
-The project includes notebooks demonstrating:
+The project includes in examples/notebooks notebooks demonstrating:
 
 - Working with Git LFS data
 - Decoding source files
@@ -300,7 +301,7 @@ git lfs pull
 
 ---
 
-### 📦 Installing extra Python packages
+#### 📦 Installing extra Python packages
 
 Inside JupyterLab:
 
@@ -317,9 +318,11 @@ Packages are installed **inside the container**, not on your Windows system.
 
 ## 🌐 Accessing the API
 
-### 📄 Swagger UI (interactive)
+### 📄 Endpoints
 
-Open: <http://localhost:8080/docs>
+Open: <http://localhost:8080>
+
+Available routes will be displayed in JSON format.
 
 You can test endpoints directly in the browser.
 
