@@ -8,19 +8,21 @@ This documentation is tailored for **non‑technical users**, with simple instru
 ## 🚀 Quick start
 
 If you already have Docker and Git configured on your local machine, you can just follow these steps:
-- clone this git repository : 
-    ```bash
-    git clone https://github.com/amrit-eu/Argo-Toolbox.git
-    cd Argo-Toolbox
-    ```
 
-- rename file `demo.env` in `.env`.
+- clone this git repository :
+
+  ```bash
+  git clone https://github.com/amrit-eu/Argo-Toolbox.git
+  cd Argo-Toolbox
+  ```
+
+- rename file `.env.demo` in `.env`.
 
 - run docker compose to launches services :
-    ```bash
-    docker compose up -d
-    ```
 
+  ```bash
+  docker compose up -d
+  ```
 
 ## 🖥️ Detailed local Deployment Guide
 
@@ -33,32 +35,34 @@ Regardless of the operating system, you will need **Docker** and **Git**.
 #### 1. Install Docker
 
 - **Windows and Mac:**
+
   - Download Docker Desktop: [Docker Desktop](https://www.docker.com/products/docker-desktop/)
   - Install with default settings and restart if prompted.
   - Ensure Docker shows **Running**.
 
 - **Linux:**
+
   - Update package index:
-  
+
     ```bash
     sudo apt update
     ```
 
   - Install Docker:
-  
+
     ```bash
     sudo apt install docker.io
     ```
 
   - Enable Docker:
-  
+
     ```bash
     sudo systemctl enable docker
     sudo systemctl start docker
     ```
 
   - Verify installation:
-  
+
     ```bash
     docker --version
     ```
@@ -68,22 +72,25 @@ Regardless of the operating system, you will need **Docker** and **Git**.
 #### 2. Install Git
 
 - **Windows:**
+
   - Download Git: [Git for Windows](https://git-scm.com/download/win)
   - Install using default settings and verify in **Git Bash**.
 
 - **Mac:**
+
   - Download Git: [Git for Mac](https://git-scm.com/download/mac)
   - Install using default settings and verify in **Terminal**.
 
 - **Linux:**
+
   - Install Git:
-  
+
     ```bash
     sudo apt install git
     ```
 
   - Verify installation:
-  
+
     ```bash
     git --version
     ```
@@ -108,7 +115,7 @@ This downloads the Toolbox code onto your computer.
 1. In the project folder, locate:
 
    ```bash
-   demo.env
+   .env.demo
    ```
 
 2. Create a copy named:
@@ -119,7 +126,7 @@ This downloads the Toolbox code onto your computer.
 
 3. If you are comfortable with Docker and wish to customise the configurations, Open `.env` using your favorite text editor.
 
-4. You can adjust values for your needs (look at `demo.env` file that describe configurations).
+4. You can adjust values for your needs (look at `.env.demo` file that describe configurations).
 
 ```env
 #file checker API configuration
@@ -145,7 +152,7 @@ WEBSERVER_PORT=8080
 COMPOSE_PROFILES=decoder,checker,jupyter
 ```
 
-Webserver will always be enabled as it is necessary to access others services. 
+Webserver will always be enabled as it is necessary to access others services.
 
 Warning : An issue prevents the web server from starting if the Jupyter service is not running. For the moment keep `jupyter` in the list of services in `COMPOSE_PROFILES`.
 
@@ -161,56 +168,57 @@ All services can be launched directly from **Docker Desktop**, without using the
 
 1. Open Docker Desktop
 
-    Launch Docker Desktop and wait until it shows:
+   Launch Docker Desktop and wait until it shows:
 
-    ```text
-    Docker Desktop — Running
-    ```
+   ```text
+   Docker Desktop — Running
+   ```
 
-2. Open the *Containers* view
+2. Open the _Containers_ view
 
-    In the left sidebar, click:
+   In the left sidebar, click:
 
-    **Containers → [your-repo-name]**
+   **Containers → [your-repo-name]**
 
-    You should see a list of services defined in `compose.yaml`.
+   You should see a list of services defined in `compose.yaml`.
 
 3. Start all services
 
-    Next to the project name, click:
+   Next to the project name, click:
 
-    👉 **▶ Start**
+   👉 **▶ Start**
 
-    Docker Desktop will:
+   Docker Desktop will:
 
-    - pull the container images (first time only)
-    - start all services listed in `compose.yaml`
-    - show green “Running” indicators
+   - pull the container images (first time only)
+   - start all services listed in `compose.yaml`
+   - show green “Running” indicators
 
 4. Check that everything is running
 
-    Each service should display:
+   Each service should display:
 
-    - a **green dot**
-    - a **Running** status
+   - a **green dot**
+   - a **Running** status
 
-    You can click any container to view logs, ports, and details.
+   You can click any container to view logs, ports, and details.
 
 5. Stop all services
 
-    To stop everything safely, click:
+   To stop everything safely, click:
 
-    👉 **⏹ Stop**
+   👉 **⏹ Stop**
 
 6. Restart if needed
 
-    You can restart the entire stack by clicking:
+   You can restart the entire stack by clicking:
 
-    👉 **⟳ Restart**
+   👉 **⟳ Restart**
 
 #### 💡 Optional: Command Line (for advanced users)
 
 ##### 🚀 Launch services
+
 If you prefer using a terminal:
 
 ```bash
@@ -244,10 +252,9 @@ docker compose ps
 
 ---
 
-
 ## Accessing Services
 
-Once started, services are accessible at (considering the port configured in `.env` file, 8080 in demo.env provided):
+Once started, services are accessible at (considering the port configured in `.env` file, 8080 in .env.demo provided):
 
 - **Decoder API**: <http://localhost:8080/argo-toolbox/api/decoder>
 - **File Checker API**: <http://localhost:8080/argo-toolbox/api/file-checker>
@@ -259,11 +266,11 @@ Once started, services are accessible at (considering the port configured in `.e
 To be completed....
 
 ### Using Argo Netcdf File Checker
+
 The file checker endpoint will then be available on <http://localhost:8080/argo-toolbox/api/file-checker/check-files> (POST method).
 
 The DAC for the files needs to be specified as a parameter. The files to check need to be included in the body of a `multipart/form-data` type request, e.g.:
 For example, post a file to `http://localhost:8080/argo-toolbox/api/file-checker/check-files?dac=coriolis` . Example files can be found <https://github.com/OneArgo/ArgoFormatChecker/tree/main/demo/inputs>
-
 
 ```http request
 curl -X 'POST' \
@@ -272,6 +279,7 @@ curl -X 'POST' \
   -H 'Content-Type: multipart/form-data' \
   -F 'files=@2903996_meta.nc'
 ```
+
 ### 🧪 Using JupyterLab
 
 JupyterLab gives you an interactive Python workspace.
@@ -283,7 +291,6 @@ Navigate to: <http://localhost:8080/argo-toolbox/jupyterlab>
 It should open automatically in your browser.
 
 ![alt text](image.png)
----
 
 #### 📂 Example Notebooks
 
