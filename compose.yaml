@@ -21,19 +21,10 @@ services:
     container_name: argo-decoder-api
     image: ${ARGODECODERAPI_IMAGE}:${ARGODECODERAPI_IMAGE_TAG}
     profiles:
-<<<<<<< HEAD
       - decoder
     # user: "${DECODER_USER_UID}:${DECODER_USER_GID}"
     # group_add:
     #   - gbatch
-=======
-      - ${ARGODECODERAPI_ENABLED:-enabled}
-    ports:
-      - ${ARGODECODERAPI_PORT:-8001}:8000
-    user: $DECODER_USER_UID:$DECODER_USER_GID
-    group_add:
-      - gbatch
->>>>>>> ec0abdc (feat(docs): environement)
     cap_drop:
       - ALL
     networks:

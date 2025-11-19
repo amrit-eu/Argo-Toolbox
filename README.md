@@ -5,7 +5,24 @@ This documentation is tailored for **non‑technical users**, with simple instru
 
 ---
 
-## 🚀 Local Deployment Guide
+## Quick start
+
+If you have already docker and git configured on your local machine you can just follows theses steps :
+- clone this git repository : 
+    ```bash
+    git clone https://github.com/amrit-eu/Argo-Toolbox.git
+    cd Argo-Toolbox
+    ```
+
+- rename file `demo.env` in `.env`.
+
+- run docker compose to launches services :
+    ```bash
+    docker compose up -d
+    ```
+
+
+## 🚀 Detailed local Deployment Guide
 
 This section provides installation instructions for Windows, Mac, and Linux. Follow the steps relevant to your operating system.
 
@@ -91,7 +108,7 @@ This downloads the Toolbox code onto your computer.
 1. In the project folder, locate:
 
    ```bash
-   .env.demo
+   demo.env
    ```
 
 2. Create a copy named:
@@ -102,7 +119,7 @@ This downloads the Toolbox code onto your computer.
 
 3. If you are comfortable with Docker and wish to customise the configurations, Open `.env` using your favorite text editor.
 
-4. You can adjust values for your needs (look at `.env.docs` file that describe configurations).
+4. You can adjust values for your needs (look at `demo.env` file that describe configurations).
 
 ---
 
@@ -173,76 +190,7 @@ docker compose down
 
 ---
 
-<<<<<<< HEAD
-## 🚀 Local Deployment Guide (Mac)
-
-TBD...
-
----
-
-## 🚀 Local Deployment Guide (Linux)
-
-This Docker Compose configuration allows you to run the Argo Toolbox API locally on your laptop, replacing the Kubernetes deployment for easier local development and testing.
-
-### Prerequisites
-
-- Docker (Docker Desktop for Windows)
-
-### Quick start
-
-Clone this repository, rename the `demo.env` file in `.env` and do this command :
-
-```bash
-# Start all services
-docker compose up -d
-```
-
-### Accessing Services
-
-Once started, services are accessible at:
-
-- **Decoder API**: <http://localhost:8080/argo-toolbox/api/decoder>
-- **File Checker API**: <http://localhost:8080/argo-toolbox/api/file-checker>
-- **JupyterLab**: <http://localhost:8080/argo-toolbox/jupyterlab>
-- **Home page**: <http://localhost:8080/>
-
-
-### Configuration
-
-The `argo_nginx.conf` is needed but should not be changed.
-All configuration is done via an `.env` file:
-
-```env
-#file checker API configuration
-FILECHECKERAPI_IMAGE=ghcr.io/oneargo/argoformatchecker/python-api
-FILECHECKERAPI_IMAGE_TAG=latest
-
-#decoder API configuration
-ARGODECODERAPI_IMAGE=boilerplateapi # to change with decoder image
-ARGODECODERAPI_IMAGE_TAG=latest
-DECODER_USER_UID=1000
-DECODER_USER_GID=1000
-
-#jupyterlab configuration :
-JUPYTERLAB_IMAGE=quay.io/jupyter/datascience-notebook
-JUPYTERLAB_IMAGE_TAG=python-3.13
-JUPYTER_USER_UID=1000
-
-#webserveur NGINX configuration
-WEBSERVER_HOST="127.0.0.1"
-WEBSERVER_PORT=8080
-
-#default profile to use with docker compose up.
-COMPOSE_PROFILES=enabled #  DO NOT CHANGE
-```
-
-If WEBSERVER is disabled, the services (file checker & decoder) will be available directly with the ports defined (localhost:8000 by default for file checker and localhost:8001 for decoder).
-
----
-
-=======
->>>>>>> c3fdb13 (feat(docs): Readme)
-### 🛑 Troubleshooting
+### 🛑 Troubleshooting docker
 
 #### View logs
 
@@ -264,6 +212,64 @@ docker compose ps
 ```
 
 ---
+
+
+## 🚀 Local Deployment Guide (Mac)
+
+TBD...
+
+---
+
+## 🚀 Local Deployment Guide (Linux)
+
+This Docker Compose configuration allows you to run the Argo Toolbox API locally on your laptop, replacing the Kubernetes deployment for easier local development and testing.
+
+
+
+## Configuring services
+The `argo_nginx.conf.template` is needed and must not be changed.
+All configuration is done via the `.env` file:
+
+```env
+#file checker API configuration
+FILECHECKERAPI_IMAGE=ghcr.io/oneargo/argoformatchecker/python-api
+FILECHECKERAPI_IMAGE_TAG=latest
+
+#decoder API configuration
+ARGODECODERAPI_IMAGE=boilerplateapi # to change with decoder image
+ARGODECODERAPI_IMAGE_TAG=latest
+DECODER_USER_UID=1000
+DECODER_USER_GID=1000
+
+#jupyterlab configuration :
+JUPYTERLAB_IMAGE=quay.io/jupyter/datascience-notebook
+JUPYTERLAB_IMAGE_TAG=python-3.13
+JUPYTER_USER_UID=1000
+
+#webserveur NGINX configuration
+WEBSERVER_HOST="127.0.0.1"
+WEBSERVER_PORT=8080
+
+#Configure which service to enable (decoder,checker,jupyter) separated by a comma. will be run with 'docker compose up'
+COMPOSE_PROFILES=decoder,checker,jupyter
+```
+
+Webserver will always be enabled as it is necessary to access others services. 
+Warning : an issue
+
+## Accessing Services
+
+Once started, services are accessible at (considering the port configured in `.env` file):
+
+- **Decoder API**: <http://localhost:8080/argo-toolbox/api/decoder>
+- **File Checker API**: <http://localhost:8080/argo-toolbox/api/file-checker>
+- **JupyterLab**: <http://localhost:8080/argo-toolbox/jupyterlab>
+- **Home page**: <http://localhost:8080/>
+
+
+
+## Using Argo Netcdf File Checker
+
 
 ## 🧪 Using JupyterLab
 
