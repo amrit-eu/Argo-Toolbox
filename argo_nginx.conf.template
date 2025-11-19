@@ -10,25 +10,19 @@ server {
         add_header Content-Type text/plain;
     }
 
-    # for file checker route 
-    location = /argo-toolbox/api/file-checker {
-        return 302 /argo-toolbox/api/file-checker/;
-    }
-
     location /argo-toolbox/api/file-checker/ {
         # workaround to let nginx start if upstream host is unavailable or down
-        set $checker "file_checker_api:8000/";
+        set $checker "file_checker_api:8000";
+        # delete the /argo-toolbox/api/file-checker when proxy to file checker api backend
+        rewrite ^/argo-toolbox/api/file-checker/?(.*)$ /$1 break;
         proxy_pass http://$checker;
-    }
-
-    # for decoder route :
-    location = /argo-toolbox/api/decoder {
-        return 302 /argo-toolbox/api/decoder/;
     }
 
     location /argo-toolbox/api/decoder/ {
         # workaround to let nginx start if upstream host is unavailable or down
         set $decoder "decoder_api:8000/";
+        # delete the /argo-toolbox/api/decoder when proxy to decoder api backend
+        rewrite ^/argo-toolbox/api/decoder/?(.*)$ /$1 break;
         proxy_pass http://$decoder;
     }
 
