@@ -1,0 +1,11 @@
+name: base
+channels:
+  - conda-forge
+dependencies:
+  - requests=2.*
+  - netcdf4=1.*
+  - numpy=2.*
+  - scipy=1.*
+  - pandas=2.*
+  - plotly=6.*
+  - xarray

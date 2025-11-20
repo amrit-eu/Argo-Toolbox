@@ -3,9 +3,7 @@ services:
     container_name: argo-file-checker-api
     image: ${FILECHECKERAPI_IMAGE}:${FILECHECKERAPI_IMAGE_TAG}
     profiles:
-      - ${FILECHECKER_ENABLED:-enabled}
-    ports:
-      - ${FILECHECKER_PORT:-8000}:8000
+      - checker
     user : "fileCheckerRunner"
     cap_drop:
       - ALL
@@ -23,12 +21,10 @@ services:
     container_name: argo-decoder-api
     image: ${ARGODECODERAPI_IMAGE}:${ARGODECODERAPI_IMAGE_TAG}
     profiles:
-      - ${DECODER_ENABLED:-enabled}
-    ports:
-      - ${DECODER_PORT:-8001}:8000
-    user: $DECODER_USER_UID:$DECODER_USER_GID
-    group_add:
-      - gbatch
+      - decoder
+    # user: "${DECODER_USER_UID}:${DECODER_USER_GID}"
+    # group_add:
+    #   - gbatch
     cap_drop:
       - ALL
     networks:
@@ -41,15 +37,42 @@ services:
       start_period: 40s
     restart: unless-stopped
 
+  jupyterlab:
+    build:
+      context: .
+      dockerfile: jupyter.Dockerfile
+      args: 
+        BASE_IMAGE: ${JUPYTERLAB_IMAGE:-quay.io/jupyter/datascience-notebook}:${JUPYTERLAB_IMAGE_TAG:-python-3.13}
+    container_name: jupyterlab
+    profiles:
+      - jupyter
+    environment:
+      - JUPYTER_PORT=${WEBSERVER_PORT}
+    user: "${JUPYTER_USER_UID}:100"
+    volumes:
+      - ./jupyter:/home/jovyan
+    cap_drop:
+      - ALL
+    networks:
+      - argo-toolbox
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${WEBSERVER_PORT}/argo-toolbox/jupyterlab/api"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    command: start-notebook.py --ServerApp.allow_remote_access=True --ServerApp.base_url=/argo-toolbox/jupyterlab/ --ServerApp.allow_origin='*'
+  
   webserver :
     container_name: argo-toolbox-webserver
     image: nginxinc/nginx-unprivileged
-    profiles:
-      - ${WEBSERVER_ENABLED:-enabled}
     ports:
-      - "${WEBSERVER_PORT:-8080}:8080"
-    volumes:
-      - ./argo_nginx.conf:/etc/nginx/conf.d/argo_nginx.conf:ro    
+      - "${WEBSERVER_HOST:-127.0.0.1}:${WEBSERVER_PORT:-8080}:8080"
+    environment:
+      - WEBSERVER_PORT=${WEBSERVER_PORT}
+    volumes:      
+      - ./argo_nginx.conf.template:/etc/nginx/templates/argo_nginx.conf.template:ro
     cap_drop:
       - ALL
     networks:
@@ -66,6 +89,9 @@ services:
         condition: service_healthy
         required: false
       file_checker_api:
+        condition: service_healthy
+        required: false
+      jupyterlab:
         condition: service_healthy
         required: false
 networks:
