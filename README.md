@@ -32,6 +32,7 @@ This section provides installation instructions for Windows, Mac, and Linux. Fol
 
 Regardless of the operating system, you will need **Docker** and **Git**.
 
+
 #### 1. Install Docker
 
 - **Windows and Mac:**
@@ -126,7 +127,7 @@ This downloads the Toolbox code onto your computer.
 
 3. If you are comfortable with Docker and wish to customise the configurations, Open `.env` using your favorite text editor.
 
-4. You can adjust values for your needs (look at `.env.demo` file that describe configurations).
+4. You can adjust values for your needs (look at `.env.docs` file that describe configurations).
 
 ```env
 #file checker API configuration
@@ -154,15 +155,20 @@ COMPOSE_PROFILES=decoder,checker,jupyter
 
 Webserver will always be enabled as it is necessary to access others services.
 
+<span style="color:darkorange">
 Warning : An issue prevents the web server from starting if the Jupyter service is not running. For the moment keep `jupyter` in the list of services in `COMPOSE_PROFILES`.
+</span>
+
 
 The `argo_nginx.conf.template` file is needed and **must not** be changed.
+
 
 ---
 
 ### ▶ Launch Services (via Docker Desktop – No Terminal Needed)
 
 All services can be launched directly from **Docker Desktop**, without using the command line.
+If you don't have Docker Desktop, please refer [this part](#1-install-docker) of documentation.
 
 ---
 
@@ -203,6 +209,8 @@ All services can be launched directly from **Docker Desktop**, without using the
 
    You can click any container to view logs, ports, and details.
 
+   ![alt text](image-1.png)
+
 5. Stop all services
 
    To stop everything safely, click:
@@ -221,11 +229,23 @@ All services can be launched directly from **Docker Desktop**, without using the
 
 If you prefer using a terminal:
 
+Launch all services :
 ```bash
 docker compose up -d
+```
+
+View services status :
+```bash
 docker compose ps
+```
+You should see something like that :
+![alt text](image-2.png)
+
+Stop services :
+```bash
 docker compose down
 ```
+
 
 ---
 
@@ -236,6 +256,8 @@ docker compose down
 ```bash
 docker compose logs -f
 ```
+
+This will display the logs of all the containers and the flag -f will keep streaming the output as logs appear
 
 ###### Restart everything
 
@@ -269,8 +291,11 @@ To be completed....
 
 The file checker endpoint will then be available on <http://localhost:8080/argo-toolbox/api/file-checker/check-files> (POST method).
 
-The DAC for the files needs to be specified as a parameter. The files to check need to be included in the body of a `multipart/form-data` type request, e.g.:
-For example, post a file to `http://localhost:8080/argo-toolbox/api/file-checker/check-files?dac=coriolis` . Example files can be found <https://github.com/OneArgo/ArgoFormatChecker/tree/main/demo/inputs>
+The DAC for the files needs to be specified as a parameter and the files to check need to be included in the body of a `multipart/form-data` type request, e.g.
+
+For example, post a file to `http://localhost:8080/argo-toolbox/api/file-checker/check-files?dac=coriolis`.
+
+Example files can be found <https://github.com/OneArgo/ArgoFormatChecker/tree/main/demo/inputs>
 
 ```http request
 curl -X 'POST' \
@@ -283,6 +308,8 @@ curl -X 'POST' \
 ### 🧪 Using JupyterLab
 
 JupyterLab gives you an interactive Python workspace.
+
+The following assumes that the services (file checker, decoder) required for your various notebooks are started.
 
 #### Open JupyterLab
 
@@ -331,6 +358,8 @@ Packages are installed **inside the container**, not on your Windows system.
 Open: <http://localhost:8080>
 
 Available routes will be displayed in JSON format.
+
+![alt text](image-3.png)
 
 You can test endpoints directly in the browser.
 
