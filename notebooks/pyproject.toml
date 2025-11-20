@@ -5,6 +5,7 @@ line-length = 120
 fix = true
 
 [tool.ruff.lint]
+# TODO (MCazaly) Review the selection of checks we use when adapting this notebook for inclusion in the lab environment.
 extend-select = ["I", "F" ,"E"] # Sort imports (like isort) and remove unused ones
 
 [tool.nbqa.files]
