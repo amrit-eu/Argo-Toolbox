@@ -20,7 +20,7 @@ server {
 
     location /argo-toolbox/api/decoder/ {
         # workaround to let nginx start if upstream host is unavailable or down
-        set $decoder "decoder_api:8000/";
+        set $decoder "decoder_api:8000";
         # delete the /argo-toolbox/api/decoder when proxy to decoder api backend
         rewrite ^/argo-toolbox/api/decoder/?(.*)$ /$1 break;
         proxy_pass http://$decoder;
