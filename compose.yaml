@@ -17,9 +17,22 @@ services:
       start_period: 40s
     restart: unless-stopped
 
+  runtime-matlab:
+    container_name: decoder-runtime-matlab
+    image: ghcr.io/euroargodev/coriolis-data-processing-chain-for-argo-floats/runtime/matlab:R2022b
+    user: root
+    volumes:
+      - runtime-matlab-volume:/matlab/runtime:rw
+
   decoder_api:
     container_name: argo-decoder-api
     image: ${ARGODECODERAPI_IMAGE}:${ARGODECODERAPI_IMAGE_TAG}
+    volumes:
+      - /home/lbruvryl/development/tmp/tmp_tc/matlab_runtime/R2022b:/mnt/runtime:ro
+      - runtime-cache:/mnt/runtime-cache:rw
+    entrypoint: ["uvicorn", "decoder_bindings.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--reload-dir", "/app/decoder_bindings"]
+    networks:
+      - argo-toolbox
     profiles:
       - decoder
     # user: "${DECODER_USER_UID}:${DECODER_USER_GID}"
@@ -27,8 +40,6 @@ services:
     #   - gbatch
     cap_drop:
       - ALL
-    networks:
-      - argo-toolbox
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/', timeout=5)"]
       interval: 30s
@@ -36,6 +47,10 @@ services:
       retries: 3
       start_period: 40s
     restart: unless-stopped
+    depends_on:
+      runtime-matlab:
+        condition: service_started
+        required: false
 
   jupyterlab:
     build:
@@ -97,3 +112,6 @@ services:
 networks:
   argo-toolbox: {}
       
+volumes:
+  runtime-matlab-volume:
+  runtime-cache:
