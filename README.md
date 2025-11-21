@@ -282,7 +282,24 @@ The following assumes that the services (file checker, decoder) required for you
 
 Navigate to: <http://localhost:8080/argo-toolbox/jupyterlab>
 
-It should open automatically in your browser.
+
+
+In the case it asks you a password, you will need to consult the juypyterLab container's logs :
+- go to Docker Desktop, containers and click on the Jupyterlab.
+
+or 
+
+- use the following command :
+```bash 
+docker compose logs -f jupyterlab
+```
+In the first lines of logs when the container started, you should see a link of the jupyterlab's path along with a token. Use this link to connect to Jupyterlab. Example (be aware that the token change at each run) :
+
+![alt text](/assets/images/image-4.png)
+
+
+Then It should open automatically in your browser :
+
 
 ![alt text](/assets/images/image.png)
 
