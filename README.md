@@ -32,7 +32,6 @@ This section provides installation instructions for Windows, Mac, and Linux. Fol
 
 Regardless of the operating system, you will need **Docker** and **Git**.
 
-
 #### 1. Install Docker
 
 - **Windows and Mac:**
@@ -43,30 +42,7 @@ Regardless of the operating system, you will need **Docker** and **Git**.
 
 - **Linux:**
 
-  - Update package index:
-
-    ```bash
-    sudo apt update
-    ```
-
-  - Install Docker:
-
-    ```bash
-    sudo apt install docker.io
-    ```
-
-  - Enable Docker:
-
-    ```bash
-    sudo systemctl enable docker
-    sudo systemctl start docker
-    ```
-
-  - Verify installation:
-
-    ```bash
-    docker --version
-    ```
+  - Follow official installation guide : <https://docs.docker.com/engine/install/#supported-platforms>
 
 ---
 
@@ -84,23 +60,13 @@ Regardless of the operating system, you will need **Docker** and **Git**.
 
 - **Linux:**
 
-  - Install Git:
-
-    ```bash
-    sudo apt install git
-    ```
-
-  - Verify installation:
-
-    ```bash
-    git --version
-    ```
+   - Follow official installation guide : <https://git-scm.com/install/linux>
 
 ---
 
 ### 📥 Clone the Repository
 
-Open Terminal (Linux and Mac) or PowerShell (Windows) and run:
+Open Terminal (Linux and Mac) or Windows Terminal (Windows) and run:
 
 ```bash
 git clone https://github.com/amrit-eu/Argo-Toolbox.git
@@ -159,9 +125,7 @@ Webserver will always be enabled as it is necessary to access others services.
 Warning : An issue prevents the web server from starting if the Jupyter service is not running. For the moment keep `jupyter` in the list of services in `COMPOSE_PROFILES`.
 </span>
 
-
 The `argo_nginx.conf.template` file is needed and **must not** be changed.
-
 
 ---
 
@@ -209,7 +173,7 @@ If you don't have Docker Desktop, please refer [this part](#1-install-docker) of
 
    You can click any container to view logs, ports, and details.
 
-   ![alt text](image-1.png)
+   ![alt text](/assets/images/image-1.png)
 
 5. Stop all services
 
@@ -230,22 +194,25 @@ If you don't have Docker Desktop, please refer [this part](#1-install-docker) of
 If you prefer using a terminal:
 
 Launch all services :
+
 ```bash
 docker compose up -d
 ```
 
 View services status :
+
 ```bash
 docker compose ps
 ```
+
 You should see something like that :
-![alt text](image-2.png)
+![alt text](/assets/images/image-2.png)
 
 Stop services :
+
 ```bash
 docker compose down
 ```
-
 
 ---
 
@@ -317,7 +284,7 @@ Navigate to: <http://localhost:8080/argo-toolbox/jupyterlab>
 
 It should open automatically in your browser.
 
-![alt text](image.png)
+![alt text](/assets/images/image.png)
 
 #### 📂 Example Notebooks
 
@@ -359,7 +326,7 @@ Open: <http://localhost:8080>
 
 Available routes will be displayed in JSON format.
 
-![alt text](image-3.png)
+![alt text](/assets/images/image-3.png)
 
 You can test endpoints directly in the browser.
 
