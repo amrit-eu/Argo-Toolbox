@@ -30,10 +30,28 @@ This section provides installation instructions for Windows, Mac, and Linux. Fol
 
 ### 🛠 Prerequisites
 
-Regardless of the operating system, you will need **Docker** and **Git**.
+Regardless of the operating system, you will need **Docker** and **Git**.Regardless of the operating system, you will need **Docker** and **Git**.
 
+A desktop UI to create,manage and run all your docker containers.
 
-#### 1. Install Docker
+Pick any one option for local testing.
+
+- Option A — Podman Desktop (recommended): If you have not installed, download and install Podman Desktop, open it, and use the GUI to run the container (instructions below).
+- Option B — Docker Desktop: If you have not installed, download and install Docker Desktop, open it, and use the GUI to run the containers (instructions below).
+
+#### 1.🦭 Podman desktop
+
+You can install Podman Desktop on.
+
+- Windows: [podman desktop](https://podman-desktop.io/).
+- macOS : [podman desktop](https://podman-desktop.io/docs/installation/macos-install)
+- linux : [podman desktop](https://podman-desktop.io/docs/installation/linux-install)
+
+If you prefer using docker desktop then follow steps to install docker desktop(step 2) else move on to step 3.
+
+---
+
+#### 2.🐳 Docker desktop
 
 - **Windows and Mac:**
 
@@ -43,30 +61,7 @@ Regardless of the operating system, you will need **Docker** and **Git**.
 
 - **Linux:**
 
-  - Update package index:
-
-    ```bash
-    sudo apt update
-    ```
-
-  - Install Docker:
-
-    ```bash
-    sudo apt install docker.io
-    ```
-
-  - Enable Docker:
-
-    ```bash
-    sudo systemctl enable docker
-    sudo systemctl start docker
-    ```
-
-  - Verify installation:
-
-    ```bash
-    docker --version
-    ```
+  - Follow official installation guide : <https://docs.docker.com/engine/install/#supported-platforms>
 
 ---
 
@@ -84,23 +79,13 @@ Regardless of the operating system, you will need **Docker** and **Git**.
 
 - **Linux:**
 
-  - Install Git:
-
-    ```bash
-    sudo apt install git
-    ```
-
-  - Verify installation:
-
-    ```bash
-    git --version
-    ```
+  - Follow official installation guide : <https://git-scm.com/install/linux>
 
 ---
 
 ### 📥 Clone the Repository
 
-Open Terminal (Linux and Mac) or PowerShell (Windows) and run:
+Open Terminal (Linux and Mac) or Windows Terminal (Windows) and run:
 
 ```bash
 git clone https://github.com/amrit-eu/Argo-Toolbox.git
@@ -159,18 +144,51 @@ Webserver will always be enabled as it is necessary to access others services.
 Warning : An issue prevents the web server from starting if the Jupyter service is not running. For the moment keep `jupyter` in the list of services in `COMPOSE_PROFILES`.
 </span>
 
-
 The `argo_nginx.conf.template` file is needed and **must not** be changed.
 
+---
+
+### ▶ Launch Services (No Terminal Expertise Needed)
+
+You can run the Toolbox API locally using either podman Desktop or Docker Desktop.
+Pick the option that matches what you installed on your computer.
+
+💼 Before running the containers you will need the following.
+
+- Clone of the Argo toolbox repository.
+- All the configuration setup correctly.
+- Docker desktop or podman desktop installed.
+
+if you do not have the repository containing the toolbox please clone it.
 
 ---
 
-### ▶ Launch Services (via Docker Desktop – No Terminal Needed)
+#### If using podman desktop
 
-All services can be launched directly from **Docker Desktop**, without using the command line.
-If you don't have Docker Desktop, please refer [this part](#1-install-docker) of documentation.
+1. Launch podman desktop
+2. You will notice a compose.yml in the toolbox.
+   Run the following command in a terminal to pull all the required images.
 
----
+   ```bash
+   podman compose --file compose.yaml up --detach
+   ```
+
+3. You can view all the containers in the podman desktop. The desktop detects the compose labels and displays the container group or group of containers.
+   for example
+   ![alt text](/assets/images/podman.png)
+4. If the containers have not started click on the 'play'⏯️ icon against the container.
+5. Alternatively to stop any container click on the 'stop'⏹️ icon
+6. If you wish to delete a container or a group of containers, click the delete icon(🗑) for that container.
+7. Viewing logs or accessing a container terminal.
+
+   Click on the container you want to inspect.
+
+   Four tabs will appear: Summary, Logs, Inspect, and Terminal.
+
+   - Click Logs to view the container’s log output.
+   - Click Terminal if you want to open a shell inside the container to interact with it directly.
+
+#### If using Docker desktop
 
 1. Open Docker Desktop
 
@@ -190,38 +208,38 @@ If you don't have Docker Desktop, please refer [this part](#1-install-docker) of
 
 3. Start all services
 
-   Next to the project name, click:
+Next to the project name, click:
 
-   👉 **▶ Start**
+👉 **▶ Start**
 
-   Docker Desktop will:
+Docker Desktop will:
 
-   - pull the container images (first time only)
-   - start all services listed in `compose.yaml`
-   - show green “Running” indicators
+- pull the container images (first time only)
+- start all services listed in `compose.yaml`
+- show green “Running” indicators
 
-4. Check that everything is running
+4.  Check that everything is running
 
-   Each service should display:
+Each service should display:
 
-   - a **green dot**
-   - a **Running** status
+- a **green dot**
+- a **Running** status
 
-   You can click any container to view logs, ports, and details.
+You can click any container to view logs, ports, and details.
 
-   ![alt text](image-1.png)
+![alt text](/assets/images/image-1.png)
 
-5. Stop all services
+5.  Stop all services
 
-   To stop everything safely, click:
+To stop everything safely, click:
 
-   👉 **⏹ Stop**
+👉 **⏹ Stop**
 
-6. Restart if needed
+6.  Restart if needed
 
-   You can restart the entire stack by clicking:
+You can restart the entire stack by clicking:
 
-   👉 **⟳ Restart**
+👉 **⟳ Restart**
 
 #### 💡 Optional: Command Line (for advanced users)
 
@@ -230,22 +248,25 @@ If you don't have Docker Desktop, please refer [this part](#1-install-docker) of
 If you prefer using a terminal:
 
 Launch all services :
+
 ```bash
 docker compose up -d
 ```
 
 View services status :
+
 ```bash
 docker compose ps
 ```
+
 You should see something like that :
-![alt text](image-2.png)
+![alt text](/assets/images/image-2.png)
 
 Stop services :
+
 ```bash
 docker compose down
 ```
-
 
 ---
 
@@ -315,9 +336,25 @@ The following assumes that the services (file checker, decoder) required for you
 
 Navigate to: <http://localhost:8080/argo-toolbox/jupyterlab>
 
-It should open automatically in your browser.
+In the case it asks you a password, you will need to consult the juypyterLab container's logs :
 
-![alt text](image.png)
+- go to Docker Desktop, containers and click on the Jupyterlab.
+
+or
+
+- use the following command :
+
+```bash
+docker compose logs -f jupyterlab
+```
+
+In the first lines of logs when the container started, you should see a link of the jupyterlab's path along with a token. Use this link to connect to Jupyterlab. Example (be aware that the token change at each run) :
+
+![alt text](/assets/images/image-4.png)
+
+Then It should open automatically in your browser :
+
+![alt text](/assets/images/image.png)
 
 #### 📂 Example Notebooks
 
@@ -359,7 +396,7 @@ Open: <http://localhost:8080>
 
 Available routes will be displayed in JSON format.
 
-![alt text](image-3.png)
+![alt text](/assets/images/image-3.png)
 
 You can test endpoints directly in the browser.
 
