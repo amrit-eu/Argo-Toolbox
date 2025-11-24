@@ -208,38 +208,38 @@ if you do not have the repository containing the toolbox please clone it.
 
 3. Start all services
 
-Next to the project name, click:
+   Next to the project name, click:
 
-👉 **▶ Start**
+   👉 **▶ Start**
 
-Docker Desktop will:
+   Docker Desktop will:
 
-- pull the container images (first time only)
-- start all services listed in `compose.yaml`
-- show green “Running” indicators
+   - pull the container images (first time only)
+   - start all services listed in `compose.yaml`
+   - show green “Running” indicators
 
-4.  Check that everything is running
+4. Check that everything is running
 
-Each service should display:
+   Each service should display:
 
-- a **green dot**
-- a **Running** status
+   - a **green dot**
+   - a **Running** status
 
-You can click any container to view logs, ports, and details.
+   You can click any container to view logs, ports, and details.
 
-![alt text](/assets/images/image-1.png)
+   ![alt text](/assets/images/image-1.png)
 
-5.  Stop all services
+5. Stop all services
 
-To stop everything safely, click:
+   To stop everything safely, click:
 
-👉 **⏹ Stop**
+   👉 **⏹ Stop**
 
-6.  Restart if needed
+6. Restart if needed
 
-You can restart the entire stack by clicking:
+   You can restart the entire stack by clicking:
 
-👉 **⟳ Restart**
+   👉 **⟳ Restart**
 
 #### 💡 Optional: Command Line (for advanced users)
 
@@ -299,8 +299,8 @@ docker compose ps
 
 Once started, services are accessible at (considering the port configured in `.env` file, 8080 in .env.demo provided):
 
-- **Decoder API**: <http://localhost:8080/argo-toolbox/api/decoder>
-- **File Checker API**: <http://localhost:8080/argo-toolbox/api/file-checker>
+- **Decoder API**: <http://localhost:8080/argo-toolbox/api/decoder/docs>
+- **File Checker API**: <http://localhost:8080/argo-toolbox/api/file-checker/docs>
 - **JupyterLab**: <http://localhost:8080/argo-toolbox/jupyterlab>
 - **Home page**: <http://localhost:8080/>
 
