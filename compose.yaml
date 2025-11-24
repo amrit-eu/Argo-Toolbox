@@ -5,6 +5,8 @@ services:
     profiles:
       - checker
     user : "fileCheckerRunner"
+    environment:
+      - API_ROOT_PATH=${FILECHECKERAPI_ROOT_PATH}
     cap_drop:
       - ALL
     networks:
