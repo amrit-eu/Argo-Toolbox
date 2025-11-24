@@ -1,36 +1,99 @@
 # Argo Toolbox API
 
-## Docker compose
+A step‑by‑step guide to install, run, and explore the **Toolbox API** locally.  
+This documentation is tailored for **non‑technical users**, with simple instructions and no prior Docker experience required.
 
-This Docker Compose configuration allows you to run the Argo Toolbox API locally on your laptop, replacing the Kubernetes deployment for easier local development and testing.
+---
 
-### Prerequisites
+## 🚀 Quick start
 
-- Docker (Docker Desktop for Windows)
+If you already have Docker and Git configured on your local machine, you can just follow these steps:
 
-### Quick start
+- clone this git repository :
 
-Clone this repository, rename the `demo.env` file in `.env` and do this command :
+  ```bash
+  git clone https://github.com/amrit-eu/Argo-Toolbox.git
+  cd Argo-Toolbox
+  ```
+
+- rename file `.env.demo` in `.env`.
+
+- run docker compose to launches services :
+
+  ```bash
+  docker compose up -d
+  ```
+
+## 🖥️ Detailed local Deployment Guide
+
+This section provides installation instructions for Windows, Mac, and Linux. Follow the steps relevant to your operating system.
+
+### 🛠 Prerequisites
+
+Regardless of the operating system, you will need **Docker** and **Git**.
+
+#### 1. Install Docker
+
+- **Windows and Mac:**
+
+  - Download Docker Desktop: [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+  - Install with default settings and restart if prompted.
+  - Ensure Docker shows **Running**.
+
+- **Linux:**
+
+  - Follow official installation guide : <https://docs.docker.com/engine/install/#supported-platforms>
+
+---
+
+#### 2. Install Git
+
+- **Windows:**
+
+  - Download Git: [Git for Windows](https://git-scm.com/download/win)
+  - Install using default settings and verify in **Git Bash**.
+
+- **Mac:**
+
+  - Download Git: [Git for Mac](https://git-scm.com/download/mac)
+  - Install using default settings and verify in **Terminal**.
+
+- **Linux:**
+
+   - Follow official installation guide : <https://git-scm.com/install/linux>
+
+---
+
+### 📥 Clone the Repository
+
+Open Terminal (Linux and Mac) or Windows Terminal (Windows) and run:
 
 ```bash
-# Start all services
-docker compose up -d
+git clone https://github.com/amrit-eu/Argo-Toolbox.git
+cd Argo-Toolbox
 ```
 
-### Accessing Services
+This downloads the Toolbox code onto your computer.
 
-Once started, services are accessible at:
+---
 
-- **Decoder API**: <http://localhost:8080/argo-toolbox/api/decoder>
-- **File Checker API**: <http://localhost:8080/argo-toolbox/api/file-checker>
-- **JupyterLab**: <http://localhost:8080/argo-toolbox/jupyterlab>
-- **Home page**: <http://localhost:8080/>
+### ⚙️ Configure the Environment
 
+1. In the project folder, locate:
 
-### Configuration
+   ```bash
+   .env.demo
+   ```
 
-The `argo_nginx.conf` is needed but should not be changed.
-All configuration is done via an `.env` file:
+2. Create a copy named:
+
+   ```bash
+   .env
+   ```
+
+3. If you are comfortable with Docker and wish to customise the configurations, Open `.env` using your favorite text editor.
+
+4. You can adjust values for your needs (look at `.env.docs` file that describe configurations).
 
 ```env
 #file checker API configuration
@@ -56,5 +119,302 @@ WEBSERVER_PORT=8080
 COMPOSE_PROFILES=decoder,checker,jupyter
 ```
 
-webserver will always be enabled as it is necessary to access others services.
+Webserver will always be enabled as it is necessary to access others services.
 
+<span style="color:darkorange">
+Warning : An issue prevents the web server from starting if the Jupyter service is not running. For the moment keep `jupyter` in the list of services in `COMPOSE_PROFILES`.
+</span>
+
+The `argo_nginx.conf.template` file is needed and **must not** be changed.
+
+---
+
+### ▶ Launch Services (via Docker Desktop – No Terminal Needed)
+
+All services can be launched directly from **Docker Desktop**, without using the command line.
+If you don't have Docker Desktop, please refer [this part](#1-install-docker) of documentation.
+
+---
+
+1. Open Docker Desktop
+
+   Launch Docker Desktop and wait until it shows:
+
+   ```text
+   Docker Desktop — Running
+   ```
+
+2. Open the _Containers_ view
+
+   In the left sidebar, click:
+
+   **Containers → [your-repo-name]**
+
+   You should see a list of services defined in `compose.yaml`.
+
+3. Start all services
+
+   Next to the project name, click:
+
+   👉 **▶ Start**
+
+   Docker Desktop will:
+
+   - pull the container images (first time only)
+   - start all services listed in `compose.yaml`
+   - show green “Running” indicators
+
+4. Check that everything is running
+
+   Each service should display:
+
+   - a **green dot**
+   - a **Running** status
+
+   You can click any container to view logs, ports, and details.
+
+   ![alt text](/assets/images/image-1.png)
+
+5. Stop all services
+
+   To stop everything safely, click:
+
+   👉 **⏹ Stop**
+
+6. Restart if needed
+
+   You can restart the entire stack by clicking:
+
+   👉 **⟳ Restart**
+
+#### 💡 Optional: Command Line (for advanced users)
+
+##### 🚀 Launch services
+
+If you prefer using a terminal:
+
+Launch all services :
+
+```bash
+docker compose up -d
+```
+
+View services status :
+
+```bash
+docker compose ps
+```
+
+You should see something like that :
+![alt text](/assets/images/image-2.png)
+
+Stop services :
+
+```bash
+docker compose down
+```
+
+---
+
+##### 🛑 Troubleshooting docker
+
+###### View logs
+
+```bash
+docker compose logs -f
+```
+
+This will display the logs of all the containers and the flag -f will keep streaming the output as logs appear
+
+###### Restart everything
+
+```bash
+docker compose down
+docker compose up -d
+```
+
+###### Check container status
+
+```bash
+docker compose ps
+```
+
+---
+
+## Accessing Services
+
+Once started, services are accessible at (considering the port configured in `.env` file, 8080 in .env.demo provided):
+
+- **Decoder API**: <http://localhost:8080/argo-toolbox/api/decoder>
+- **File Checker API**: <http://localhost:8080/argo-toolbox/api/file-checker>
+- **JupyterLab**: <http://localhost:8080/argo-toolbox/jupyterlab>
+- **Home page**: <http://localhost:8080/>
+
+### Using Decoder
+
+To be completed....
+
+### Using Argo Netcdf File Checker
+
+The file checker endpoint will then be available on <http://localhost:8080/argo-toolbox/api/file-checker/check-files> (POST method).
+
+The DAC for the files needs to be specified as a parameter and the files to check need to be included in the body of a `multipart/form-data` type request, e.g.
+
+For example, post a file to `http://localhost:8080/argo-toolbox/api/file-checker/check-files?dac=coriolis`.
+
+Example files can be found <https://github.com/OneArgo/ArgoFormatChecker/tree/main/demo/inputs>
+
+```http request
+curl -X 'POST' \
+  'http://localhost:8080/argo-toolbox/api/file-checker/check-files?dac=coriolis' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'files=@2903996_meta.nc'
+```
+
+### 🧪 Using JupyterLab
+
+JupyterLab gives you an interactive Python workspace.
+
+The following assumes that the services (file checker, decoder) required for your various notebooks are started.
+
+#### Open JupyterLab
+
+Navigate to: <http://localhost:8080/argo-toolbox/jupyterlab>
+
+
+
+In the case it asks you a password, you will need to consult the juypyterLab container's logs :
+- go to Docker Desktop, containers and click on the Jupyterlab.
+
+or 
+
+- use the following command :
+```bash 
+docker compose logs -f jupyterlab
+```
+In the first lines of logs when the container started, you should see a link of the jupyterlab's path along with a token. Use this link to connect to Jupyterlab. Example (be aware that the token change at each run) :
+
+![alt text](/assets/images/image-4.png)
+
+
+Then It should open automatically in your browser :
+
+
+![alt text](/assets/images/image.png)
+
+#### 📂 Example Notebooks
+
+The project includes in examples/notebooks notebooks demonstrating:
+
+- Working with Git LFS data
+- Decoding source files
+- Validating Argo NetCDF files
+
+#### 🔄 Pull large Git LFS data
+
+```bash
+git lfs install
+git lfs pull
+```
+
+---
+
+#### 📦 Installing extra Python packages
+
+Inside JupyterLab:
+
+1. Open a **Terminal**
+2. Run:
+
+```bash
+pip install <package-name>
+```
+
+Packages are installed **inside the container**, not on your Windows system.
+
+---
+
+## 🌐 Accessing the API
+
+### 📄 Endpoints
+
+Open: <http://localhost:8080>
+
+Available routes will be displayed in JSON format.
+
+![alt text](/assets/images/image-3.png)
+
+You can test endpoints directly in the browser.
+
+---
+
+### 💻 API Usage Examples
+
+#### 🐍 Python
+
+```python
+import requests
+print(requests.get("http://localhost:8080/<endpoint>").json())
+```
+
+#### 📘 R
+
+```r
+library(httr)
+content(GET("http://localhost:8080/<endpoint>"))
+```
+
+#### 🟡 MATLAB
+
+```matlab
+response = webread("http://localhost:8080/<endpoint>")
+```
+
+#### 🔵 Julia
+
+```julia
+using HTTP, JSON
+JSON.parse(String(HTTP.get("http://localhost:8080/<endpoint>").body))
+```
+
+#### 🐚 curl (Bash / Zsh)
+
+```bash
+curl http://localhost:8080/<endpoint>
+```
+
+#### PowerShell
+
+```powershell
+Invoke-WebRequest -Uri "http://localhost:8080/<endpoint>" |
+    Select-Object -ExpandProperty Content
+```
+
+---
+
+### 🐞 Reporting Issues
+
+When reporting an issue, please include:
+
+- Your Windows version
+- Docker Desktop version
+- Steps to reproduce
+- Logs or error messages
+
+Submit issues here:
+
+👉 <https://github.com/amrit-eu/Argo-Toolbox/issues>
+
+---
+
+## 🎉 You’re Ready
+
+You now have a fully functional local environment running:
+
+- The Toolbox API
+- JupyterLab
+- Example notebooks
+- Multiple access methods
+
+Perfect for “**PI on a Laptop**” workflows and offline analysis.
