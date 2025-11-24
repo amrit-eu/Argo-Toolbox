@@ -4,6 +4,8 @@ services:
     image: ${FILECHECKERAPI_IMAGE}:${FILECHECKERAPI_IMAGE_TAG}
     profiles:
       - checker
+    environment:
+      - API_ROOT_PATH=/argo-toolbox/api/file-checker
     user : "fileCheckerRunner"
     cap_drop:
       - ALL
@@ -20,6 +22,8 @@ services:
   runtime-matlab:
     container_name: decoder-runtime-matlab
     image: ghcr.io/euroargodev/coriolis-data-processing-chain-for-argo-floats/runtime/matlab:R2022b
+    profiles:
+      - decoder
     user: root
     volumes:
       - runtime-matlab-volume:/matlab/runtime:rw
@@ -35,6 +39,8 @@ services:
       - argo-toolbox
     profiles:
       - decoder
+    environment:
+      - API_ROOT_PATH=/argo-toolbox/api/decoder
     # user: "${DECODER_USER_UID}:${DECODER_USER_GID}"
     # group_add:
     #   - gbatch
