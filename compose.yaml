@@ -4,9 +4,9 @@ services:
     image: ${FILECHECKERAPI_IMAGE}:${FILECHECKERAPI_IMAGE_TAG}
     profiles:
       - checker
-    user : "fileCheckerRunner"
     environment:
-      - API_ROOT_PATH=${FILECHECKERAPI_ROOT_PATH}
+      - API_ROOT_PATH=/argo-toolbox/api/file-checker
+    user : "fileCheckerRunner"
     cap_drop:
       - ALL
     networks:
@@ -19,37 +19,44 @@ services:
       start_period: 40s
     restart: unless-stopped
 
-  runtime-matlab:
-    container_name: decoder-api-runtime-matlab
-    image: ${RUNTIME_IMAGE}:${RUNTIME_IMAGE_TAG}
-    user: root
-    volumes:
-      - runtime-matlab-volume:/matlab/runtime:rw
+  # runtime_matlab:
+  #   container_name: decoder-runtime-matlab
+  #   image: ghcr.io/euroargodev/coriolis-data-processing-chain-for-argo-floats/runtime/matlab:R2022b
+  #   profiles:
+  #     - decoder
+  #   user: root
+  #   volumes:
+  #     - runtime-matlab-volume:/matlab/runtime:rw
+
   decoder_api:
-    container_name: decoder-api
-    image: ${DECODER_API_IMAGE}:${DECODER_API_IMAGE_TAG}
-    entrypoint: [ "uvicorn", "decoder_bindings.main:app", "--host", "0.0.0.0", "--port", "8000"]
-    user: root
-    environment:
-      - API_ROOT_PATH=${DECODER_API_ROOT_PATH}
+    container_name: argo-decoder-api
+    image: ${ARGODECODERAPI_IMAGE}:${ARGODECODERAPI_IMAGE_TAG}
     volumes:
-      - runtime-matlab-volume:/mnt/runtime:ro
+      - /home/lbruvryl/development/tmp/tmp_tc/matlab_runtime/R2022b:/mnt/runtime:ro
       - runtime-cache:/mnt/runtime-cache:rw
-    ports:
-      - 8000:8000
-    depends_on:
-      - runtime-matlab
-    cap_drop:
-      - ALL
+    entrypoint: ["uvicorn", "decoder_bindings.main:app", "--host", "0.0.0.0", "--port", "8000"]
     networks:
       - argo-toolbox
+    profiles:
+      - decoder
+    environment:
+      - API_ROOT_PATH=/argo-toolbox/api/decoder
+    # user: "${DECODER_USER_UID}:${DECODER_USER_GID}"
+    # group_add:
+    #   - gbatch
+    cap_drop:
+      - ALL
     healthcheck:
-      test: [ "CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/docs', timeout=5)" ]
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/docs', timeout=5)"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
     restart: unless-stopped
+    # depends_on:
+    #   runtime_matlab:
+    #     condition: service_started
+    #     required: false
 
   jupyterlab:
     build:
@@ -69,8 +76,6 @@ services:
       - ALL
     networks:
       - argo-toolbox
-    ports:
-      - 8888:8888
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:${WEBSERVER_PORT}/argo-toolbox/jupyterlab/api"]
       interval: 30s
@@ -103,16 +108,16 @@ services:
     depends_on:
       decoder_api:
         condition: service_healthy
-        required: true
+        required: false
       file_checker_api:
         condition: service_healthy
-        required: true
+        required: false
       jupyterlab:
         condition: service_healthy
-        required: true
+        required: false
 networks:
   argo-toolbox: {}
-
+      
 volumes:
   runtime-matlab-volume:
   runtime-cache:
