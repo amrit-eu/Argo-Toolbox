@@ -22,6 +22,8 @@ services:
   runtime-matlab:
     container_name: decoder-runtime-matlab
     image: ghcr.io/euroargodev/coriolis-data-processing-chain-for-argo-floats/runtime/matlab:R2022b
+    profiles:
+      - decoder
     user: root
     volumes:
       - runtime-matlab-volume:/matlab/runtime:rw
