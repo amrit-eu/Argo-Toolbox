@@ -4,6 +4,8 @@ services:
     image: ${FILECHECKERAPI_IMAGE}:${FILECHECKERAPI_IMAGE_TAG}
     profiles:
       - checker
+    environment:
+      - API_ROOT_PATH=/argo-toolbox/api/file-checker
     user : "fileCheckerRunner"
     cap_drop:
       - ALL
@@ -22,6 +24,8 @@ services:
     image: ${ARGODECODERAPI_IMAGE}:${ARGODECODERAPI_IMAGE_TAG}
     profiles:
       - decoder
+    environment:
+      - API_ROOT_PATH=/argo-toolbox/api/decoder
     # user: "${DECODER_USER_UID}:${DECODER_USER_GID}"
     # group_add:
     #   - gbatch
