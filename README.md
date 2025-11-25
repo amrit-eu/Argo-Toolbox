@@ -5,7 +5,7 @@ This documentation is tailored for **non‑technical users**, with simple instru
 
 ---
 
-## 🚀 Quick start
+## 🚀 Quickstart
 
 If you already have Docker and Git configured on your local machine, you can just follow these steps:
 
@@ -18,40 +18,39 @@ If you already have Docker and Git configured on your local machine, you can jus
 
 - rename file `.env.demo` in `.env`.
 
-- run docker compose to launches services :
+- run docker compose to launch services:
 
   ```bash
   docker compose up -d
   ```
 
-## 🖥️ Detailed local Deployment Guide
+## 🖥️ Detailed Local Installation Guide
 
 This section provides installation instructions for Windows, Mac, and Linux. Follow the steps relevant to your operating system.
 
 ### 🛠 Prerequisites
 
-Regardless of the operating system, you will need **Docker** and **Git**.Regardless of the operating system, you will need **Docker** and **Git**.
+Regardless of the operating system, you will need to install **Git** and a **containerisation platform** like Docker or Podman.
 
-A desktop UI to create,manage and run all your docker containers.
+A containerised application is packaged with everything it needs to run into a single, lightweight unit so it works the same 
+on any computer. This also allows the application to run in an isolated environment without needing a full virtual machine, 
+making it easier to share, move, and run reliably.
 
-Pick any one option for local testing.
+Podman Desktop or Docker Desktop are two available options of containerisation platforms with desktop UIs to create, manage and run app containers.
+Choose one of these options and follow the steps below to download and install it.
 
-- Option A — Podman Desktop (recommended): If you have not installed, download and install Podman Desktop, open it, and use the GUI to run the container (instructions below).
-- Option B — Docker Desktop: If you have not installed, download and install Docker Desktop, open it, and use the GUI to run the containers (instructions below).
+#### 1. 🫙 Containerization Platform
+##### Option 1: 🦭 Podman Desktop
 
-#### 1.🦭 Podman desktop
+You can install Podman Desktop on:
 
-You can install Podman Desktop on.
-
-- Windows: [podman desktop](https://podman-desktop.io/).
-- macOS : [podman desktop](https://podman-desktop.io/docs/installation/macos-install)
-- linux : [podman desktop](https://podman-desktop.io/docs/installation/linux-install)
-
-If you prefer using docker desktop then follow steps to install docker desktop(step 2) else move on to step 3.
+- Windows: [Podman Desktop](https://podman-desktop.io/).
+- MacOS : [Podman Desktop](https://podman-desktop.io/docs/installation/macos-install)
+- Linux : [Podman Desktop](https://podman-desktop.io/docs/installation/linux-install)
 
 ---
 
-#### 2.🐳 Docker desktop
+##### Option 2: 🐳 Docker Desktop
 
 - **Windows and Mac:**
 
@@ -83,9 +82,9 @@ If you prefer using docker desktop then follow steps to install docker desktop(s
 
 ---
 
-### 📥 Clone the Repository
+### 📥 3. Clone the Repository
 
-Open Terminal (Linux and Mac) or Windows Terminal (Windows) and run:
+Open Terminal (Linux and Mac) or Windows Terminal/Powershell/Command Prompt (Windows) and run:
 
 ```bash
 git clone https://github.com/amrit-eu/Argo-Toolbox.git
@@ -96,53 +95,15 @@ This downloads the Toolbox code onto your computer.
 
 ---
 
-### ⚙️ Configure the Environment
+### ⚙️ 4. Configure the Environment
 
-1. In the project folder, locate:
+1. In the project folder, locate the `.env.demo` file.
+2. Copy the file and rename the copy `.env`.
+3. The .env file contains a working default configuration. If you wish to customise the configurations, open `.env` using your favorite text editor and adjust values according to your needs (Configuration options are described in the `.env.docs` file).
+4. Modify the value of `COMPOSE_PROFILES` to enable or disable services as needed.
+   ⚠️ Warning ⚠️ An issue prevents the local webserver from starting if the Jupyter service is not running. For the moment, please keep `jupyter` in the list of services in `COMPOSE_PROFILES`.
 
-   ```bash
-   .env.demo
-   ```
-
-2. Create a copy named:
-
-   ```bash
-   .env
-   ```
-
-3. If you are comfortable with Docker and wish to customise the configurations, Open `.env` using your favorite text editor.
-
-4. You can adjust values for your needs (look at `.env.docs` file that describe configurations).
-
-```env
-#file checker API configuration
-FILECHECKERAPI_IMAGE=ghcr.io/oneargo/argoformatchecker/python-api
-FILECHECKERAPI_IMAGE_TAG=latest
-
-#decoder API configuration
-ARGODECODERAPI_IMAGE=boilerplateapi # to change with decoder image
-ARGODECODERAPI_IMAGE_TAG=latest
-DECODER_USER_UID=1000
-DECODER_USER_GID=1000
-
-#jupyterlab configuration :
-JUPYTERLAB_IMAGE=quay.io/jupyter/datascience-notebook
-JUPYTERLAB_IMAGE_TAG=python-3.13
-JUPYTER_USER_UID=1000
-
-#webserveur NGINX configuration
-WEBSERVER_HOST="127.0.0.1"
-WEBSERVER_PORT=8080
-
-#Configure which service to enable (decoder,checker,jupyter) separated by a comma. will be run with 'docker compose up'
-COMPOSE_PROFILES=decoder,checker,jupyter
-```
-
-Webserver will always be enabled as it is necessary to access others services.
-
-<span style="color:darkorange">
-Warning : An issue prevents the web server from starting if the Jupyter service is not running. For the moment keep `jupyter` in the list of services in `COMPOSE_PROFILES`.
-</span>
+The webserver will always be enabled as it is necessary to access other services.
 
 The `argo_nginx.conf.template` file is needed and **must not** be changed.
 
@@ -150,45 +111,42 @@ The `argo_nginx.conf.template` file is needed and **must not** be changed.
 
 ### ▶ Launch Services (No Terminal Expertise Needed)
 
-You can run the Toolbox API locally using either podman Desktop or Docker Desktop.
+You can run the Toolbox API locally using either Podman Desktop or Docker Desktop.
 Pick the option that matches what you installed on your computer.
 
-💼 Before running the containers you will need the following.
+💼 Before running the containers you will need the following:
 
-- Clone of the Argo toolbox repository.
-- All the configuration setup correctly.
-- Docker desktop or podman desktop installed.
-
-if you do not have the repository containing the toolbox please clone it.
+- Docker Desktop or Podman Desktop installed (see step 1 in the installation guide)
+- A clone of the [Argo Toolbox](https://github.com/amrit-eu/Argo-Toolbox) repository (see steps 2 and 3 in the installation guide)
+- A `.env` file to configure the environment for the services (see step 4 in the installation guide)
 
 ---
 
-#### If using podman desktop
+#### If using Podman Desktop
 
-1. Launch podman desktop
-2. You will notice a compose.yml in the toolbox.
-   Run the following command in a terminal to pull all the required images.
+1. Launch Podman Desktop
+2. The Argo Toolbox repository contains a `compose.yaml` file. Open a terminal and navigate to the folder containing this file. 
+3. Run the following command in the terminal to pull all the required images.
 
    ```bash
    podman compose --file compose.yaml up --detach
    ```
 
-3. You can view all the containers in the podman desktop. The desktop detects the compose labels and displays the container group or group of containers.
+4. You can view all the containers in the Podman Desktop UI. This detects the compose labels and displays the container group or group of containers.
    for example
    ![alt text](/assets/images/podman.png)
-4. If the containers have not started click on the 'play'⏯️ icon against the container.
-5. Alternatively to stop any container click on the 'stop'⏹️ icon
-6. If you wish to delete a container or a group of containers, click the delete icon(🗑) for that container.
-7. Viewing logs or accessing a container terminal.
-
-   Click on the container you want to inspect.
+5. If the containers have not started click on the 'play'⏯️ icon against the container.
+6. To stop any container click on the 'stop'⏹️ icon
+7. If you wish to delete a container or a group of containers, click the delete icon(🗑) for that container.
+8. To view logs or accessing a container terminal:
+    - Click on the container you want to inspect.
 
    Four tabs will appear: Summary, Logs, Inspect, and Terminal.
 
    - Click Logs to view the container’s log output.
    - Click Terminal if you want to open a shell inside the container to interact with it directly.
 
-#### If using Docker desktop
+#### If using Docker Desktop
 
 1. Open Docker Desktop
 
@@ -270,7 +228,7 @@ docker compose down
 
 ---
 
-##### 🛑 Troubleshooting docker
+##### 🛑 Troubleshooting Docker
 
 ###### View logs
 
@@ -451,7 +409,7 @@ Invoke-WebRequest -Uri "http://localhost:8080/<endpoint>" |
 When reporting an issue, please include:
 
 - Your Windows version
-- Docker Desktop version
+- Docker Desktop/Podman Desktop version
 - Steps to reproduce
 - Logs or error messages
 
