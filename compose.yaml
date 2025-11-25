@@ -30,7 +30,7 @@ services:
 
   decoder_api:
     container_name: argo-decoder-api
-    image: ${ARGODECODERAPI_IMAGE}:${ARGODECODERAPI_IMAGE_TAG}
+    image: ${DECODER_API_IMAGE}:${DECODER_API_IMAGE_TAG}
     volumes:
       - runtime-matlab-volume:/mnt/runtime:ro
       - runtime-cache:/mnt/runtime-cache:rw
