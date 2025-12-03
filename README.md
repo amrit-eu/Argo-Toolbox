@@ -45,11 +45,11 @@ Once started, services are accessible at the port configured as `WEBSERVER_PORT`
     
     You can test endpoints directly in the browser.
 
-### 🔢 Decoder
+### 🔢 Using the Decoder
 
 Details on using the Decoder API can be found in the [Decoder API documentation](docs/Usage_DecoderAPI.md).
 
-### 🔎 Using Argo NetCDF File Checker
+### 🔎 Using the Argo NetCDF File Checker
 
 Details on using the NetCDF File Checker API can be found in the [File Checker API documentation](docs/).
 

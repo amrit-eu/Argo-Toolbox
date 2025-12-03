@@ -1,4 +1,4 @@
-
+### 🔎 Using the Argo NetCDF File Checker
 
 The file checker endpoint will be available by default on <http://localhost:8080/argo-toolbox/api/file-checker/check-files> (POST method).
 
@@ -15,6 +15,13 @@ curl -X 'POST' \
   -F 'files=@2903996_meta.nc'
 ```
 
+#### JupyterLab example
+
+The JupyterLab instance provided by this repository is pre-configured with a notebook demonstrating usage of the File Checker API.
+See the [JupyterLab usage instructions](Usage_JupyterLab.md) for details on how to access the instance.
+
+
+### 💻 API Usage Examples
 #### 🐍 Python
 
 ```python

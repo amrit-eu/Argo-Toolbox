@@ -7,6 +7,13 @@ The files to decode need to be included in the body of a `multipart/form-data` t
 curl -X 'POST' TBD...
 ```
 
+#### JupyterLab example
+
+The JupyterLab instance provided by this repository is pre-configured with a notebook demonstrating usage of the Decoder API.
+See the [JupyterLab usage instructions](Usage_JupyterLab.md) for details on how to access the instance.
+
+
+### 💻 API Usage Examples
 #### 🐍 Python
 
 ```python
