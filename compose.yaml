@@ -69,12 +69,9 @@ services:
       - jupyter
     environment:
       - JUPYTER_PORT=${WEBSERVER_PORT}
-      - MATLAB_RUNTIME_INSTALL_DIR=/mnt/runtime
     user: "${JUPYTER_USER_UID}:100"
     volumes:
       - ./jupyter:/home/jovyan
-      - runtime-matlab-volume:/mnt/runtime:ro
-      - runtime-cache:/mnt/runtime-cache:rw
     cap_drop:
       - ALL
     networks:
@@ -87,10 +84,6 @@ services:
       start_period: 40s
     restart: unless-stopped
     command: start-notebook.py --ServerApp.allow_remote_access=True --ServerApp.base_url=/argo-toolbox/jupyterlab/ --ServerApp.allow_origin='*'
-    depends_on:
-      runtime_matlab:
-        condition: service_started
-        required: false
   
   webserver :
     container_name: argo-toolbox-webserver
