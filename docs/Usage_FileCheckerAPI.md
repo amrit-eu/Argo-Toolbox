@@ -49,7 +49,9 @@ using HTTP, JSON
 JSON.parse(String(HTTP.get("http://localhost:8080/<endpoint>").body))
 ```
 
-#### 🐚 curl (Bash / Zsh)
+#### 🐚 Curl
+
+Curl commands can be executed for example in a Terminal (Linux/Mac), PowerShell/Command Prompt (Windows) or in the JupyterLab terminal.
 
 ```bash
 curl http://localhost:8080/<endpoint>
