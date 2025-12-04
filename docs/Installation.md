@@ -5,7 +5,7 @@ This section provides installation instructions for Windows, Mac, and Linux. Fol
 
 Regardless of the operating system, you will need to install **Git** and a **containerisation platform** like Docker or Podman.
 
-A containerised application is packaged into a single, lightweight unit with everything it needs to run  so it works the same
+A containerised application is packaged into a single, lightweight unit with everything it needs to run so it works the same
 on any computer. This also allows the application to run in an isolated environment without needing a full virtual machine,
 making it easier to share, move, and run reliably.
 
@@ -24,6 +24,9 @@ You can install Podman Desktop on:
 ---
 
 ###### Option 2: 🐳 Docker Desktop
+
+Administrator privileges are required to install Docker Desktop, but it may be installed so that it can be run
+by a non-administrator user. See the following article for more information: [How do I run Docker Desktop without administrator privileges?](https://docs.docker.com/desktop/troubleshoot-and-support/faqs/general/#how-do-i-run-docker-desktop-without-administrator-privileges)
 
 - **Windows and Mac:**
 
