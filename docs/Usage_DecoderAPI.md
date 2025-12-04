@@ -3,7 +3,7 @@ The decoder endpoint will be available by default on <http://localhost:8080/argo
 The endpoint to decode files for a specific float will be <http://localhost:8080/argo-toolbox/api/decoder/decode_float/{WMONUM}>, with the float's respective WMONUM inserted.
 The files to decode need to be included in the body of a `multipart/form-data` type request alongside the metadata information about the float and optional configuration overrides.
 
-```http request
+```bash
 curl -X 'POST' TBD...
 ```
 

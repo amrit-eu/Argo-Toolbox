@@ -7,7 +7,7 @@ For example, post a file to `http://localhost:8080/argo-toolbox/api/file-checker
 
 Example files can be found <https://github.com/OneArgo/ArgoFormatChecker/tree/main/demo/inputs>
 
-```http request
+```bash
 curl -X 'POST' \
   'http://localhost:8080/argo-toolbox/api/file-checker/check-files?dac=coriolis' \
   -H 'accept: application/json' \
