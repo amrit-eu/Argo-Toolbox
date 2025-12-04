@@ -60,14 +60,14 @@ by a non-administrator user. See the following article for more information: [Ho
 
 ### 📥 3. Clone the Repository
 
-Open Terminal (Linux and Mac) or Windows Terminal, Powershell, or Command Prompt (Windows) and run:
-
-```bash
-git clone https://github.com/amrit-eu/Argo-Toolbox.git
-cd Argo-Toolbox
-```
-
-This downloads the Toolbox code onto your computer.
+- Open Terminal (Linux and Mac) or Windows Terminal, Powershell, or Command Prompt (Windows)
+- Navigate to a location where you would like to place the code, for example a `code` directory in your user home directory. 
+    The `git clone` command will create a directory named `Argo-Toolbox within this location where the code will be placed.
+- Run the following command to download the Toolbox code onto your computer from GitHub:
+    ```bash
+    git clone https://github.com/amrit-eu/Argo-Toolbox.git
+    cd Argo-Toolbox
+    ```
 
 ---
 
