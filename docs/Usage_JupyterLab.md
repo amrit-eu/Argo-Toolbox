@@ -45,7 +45,12 @@ Included are examples demonstrating how to:
 
 ---
 
-#### 🔄 Pull large Git LFS data
+#### 🔄 Pull Git LFS data
+This repository uses Git Large File Storage to store real-world example data files that you can test the Toolbox with.
+
+Depending on your settings, this data may not be downloaded automatically when you first clone the repo.
+
+To manually pull the example data for this repo, use the following commands:
 
 ```bash
 git lfs install
