@@ -69,6 +69,7 @@ services:
       - jupyter
     environment:
       - JUPYTER_PORT=${WEBSERVER_PORT}
+      - PIP_USER=1
     user: "${JUPYTER_USER_UID}:100"
     volumes:
       - ./jupyter:/home/jovyan
