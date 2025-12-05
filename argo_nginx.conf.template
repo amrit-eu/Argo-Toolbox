@@ -16,6 +16,7 @@ server {
         # delete the /argo-toolbox/api/file-checker when proxy to file checker api backend
         rewrite ^/argo-toolbox/api/file-checker/?(.*)$ /$1 break;
         proxy_pass http://$checker;
+        client_max_body_size 100M;
     }
 
     location /argo-toolbox/api/decoder/ {
@@ -24,6 +25,7 @@ server {
         # delete the /argo-toolbox/api/decoder when proxy to decoder api backend
         rewrite ^/argo-toolbox/api/decoder/?(.*)$ /$1 break;
         proxy_pass http://$decoder;
+        client_max_body_size 100M;
     }
 
     # for jupyterlab route :
