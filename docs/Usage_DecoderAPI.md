@@ -14,6 +14,7 @@ See the [JupyterLab usage instructions](Usage_JupyterLab.md) for details on how 
 
 Metadata and configuration information about the float whose data is to be decoded must be sent to the API as part of the request.
 This is the same information contained in the float metadata file and float decoder configuration files (often named meta.json and info.json).
+
 The configuration information is required by the decoder. The metadata information will be copied into the Meta NetCDF file generated during decoding.
 Please see the [Coriolis Decoder Manual](https://github.com/euroargodev/Coriolis-data-processing-chain-for-Argo-floats/tree/main/decArgo_doc/decoder_user_manual)
 for information on how to populate this information.
@@ -54,7 +55,7 @@ float_metadata = json.dumps({
 })
 ```
 
-#### Setting Decoder Options
+### Setting Decoder Options
 
 Additional decoder input parameters can be provided to the Decoder API via an  optional `configuration_override` parameter.
 This accepts the parameters usually contained in a decoder config json file, such as in the examples found here: 
