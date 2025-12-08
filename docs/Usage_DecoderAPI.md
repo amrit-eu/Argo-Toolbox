@@ -38,7 +38,7 @@ float_info = {
     "WMO": "6903014",
     "PTT": "300234068508780",
     "FLOAT_TYPE": "PROVOR",
-    # add further float information
+    # add further float configuration information
 }
 
 meta_info = {
@@ -51,7 +51,7 @@ meta_info = {
 
 float_metadata = json.dumps({
     "float_info": float_info,
-    "float_metadata_info": meta_info
+    "float_meta_info": meta_info
 })
 ```
 
